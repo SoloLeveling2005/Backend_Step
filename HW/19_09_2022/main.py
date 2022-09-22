@@ -31,7 +31,7 @@ class MainWindow(QWidget):  # MainWindow - класс наследник(доч�
         self.push_button_create.clicked.connect(self.create)
 
         self.show()
-        
+
     def create(self):
         spin_box_item = self.widget.value()
         input_get_expansion_item = self.line_edit_path.text()
