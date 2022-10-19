@@ -1,9 +1,12 @@
+import argparse
+import os
 import sys
 
 import psycopg2 as psycopg2
 from PyQt6.QtCore import QSize, Qt
 from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton, QVBoxLayout, QWidget, QLineEdit
-
+from werkzeug.utils import secure_filename
+import cv2
 connect = "dbname='postgres' user='postgres' host='localhost' password='Solo2005'"
 connection = psycopg2.connect(connect)
 cursor = connection.cursor()
@@ -34,64 +37,43 @@ class MainWindow(QMainWindow):
 
         layout = QVBoxLayout()
 
-        button1 = QPushButton("Вернуть все значение в таблице todo_list_user базы данных todo_list_database")
-        button1.clicked.connect(self.select_all)
-        button2 = QPushButton("Добавить данные в базу данных")
-        button2.clicked.connect(self.insert_data)
         # Устанавливаем центральный виджет Window.
-        self.input_name = QLineEdit()
-        self.input_name.setPlaceholderText("Введит имя")
-        self.input_password = QLineEdit()
-        self.input_password.setPlaceholderText("Введите пароль")
+        self.input_url = QLineEdit()
+        self.input_url.setPlaceholderText("Введите название фото в данной дерриктории")
 
-        button1.setStyleSheet(
+        button = QPushButton("Преобразовать")
+        button.clicked.connect(self.do)
+
+
+        button.setStyleSheet(
             "QPushButton { padding: 5px 7px; text-align: center; }"
         )
 
-
-        layout.addWidget(button1)
-        layout.addWidget(self.input_name)
-        layout.addWidget(self.input_password)
-        layout.addWidget(button2)
+        layout.addWidget(button)
+        layout.addWidget(self.input_url)
 
 
         widget = QWidget()
         widget.setLayout(layout)
         self.setCentralWidget(widget)
-        # self.setWindowTitle("My App")
-        # button1 = QPushButton("Вернуть все значение в таблице todo_list_user базы данных todo_list_database")
-        # button1.clicked.connect(self.select_all)
-        # button2 = QPushButton("Вернуть все значение в таблице todo_list_user базы данных todo_list_database")
-        # button2.clicked.connect(self.select_all)
-        # # Устанавливаем центральный виджет Window.
-        # self.setCentralWidget(button1)
-        # self.setCentralWidget(button2)
+    def do(self):
+        ap = argparse.ArgumentParser()
+        ap.add_argument("-i", "--image", required=True, help="path to input image")
+        args = vars(ap.parse_args())
+        file = cv2.imread(args["image"], cv2.IMREAD_GRAYSCALE)
+        path = self.input_url.text()
+        UPLOAD_FOLDER = self.input_url.text()
+        filename = secure_filename(file.filename)
+        file.save(os.path.join(UPLOAD_FOLDER, filename))
 
-    def select_all(self):
-        connect_def(connect)
-        cursor.execute(f"""
-                                SELECT * FROM public."user"
-                                """)
-        data_tasks = cursor.fetchall()
-        cursor.close()
+        img = cv2.imread(f'{path}/{filename}')
+        # Scale down to 30%
+        p = 0.30
+        w = int(img.shape[1] * p)
+        h = int(img.shape[0] * p)
+        new_img = cv2.resize(img, (w, h))
+        cv2.imwrite(f'{path}/{filename}', new_img)
 
-        print(data_tasks)
-        # print(self.input_text.text())
-
-    def insert_data(self):
-        connect_def(connect)
-        cursor.execute(f"""
-        INSERT INTO public."user"(
-        login, password)
-        VALUES ('{self.input_name.text()}', '{self.input_password.text()}');
-        """)
-        # print(f'{self.input_name.text()}', f'{self.input_password.text()}')
-        cursor.close()
-        connection.commit()
-
-        self.input_name.setText("")
-        self.input_password.setText("")
-        print("Успешно добавлено")
 app = QApplication(sys.argv)
 
 window = MainWindow()
