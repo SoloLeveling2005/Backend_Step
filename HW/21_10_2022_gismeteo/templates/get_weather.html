@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h2>Информация взята с сайта: https://world-weather.ru/pogoda/kazakhstan/astana/</h2><br>
+<div style="display:flex;">
+
+    <div class="day">Дата:<br><span>{{mass_data_days[0]}}</span>Температура:<span>{{mass_data_temp[0]}}</span></div>
+    <div class="day">Дата:<br><span>{{mass_data_days[1]}}</span>Температура<span>{{mass_data_temp[1]}}</span></div>
+    <div class="day">Дата:<br><span>{{mass_data_days[2]}}</span>Температура<span>{{mass_data_temp[2]}}</span></div>
+    <div class="day">Дата:<br><span>{{mass_data_days[3]}}</span>Температура<span>{{mass_data_temp[3]}}</span></div>
+    <div class="day">Дата:<br><span>{{mass_data_days[4]}}</span>Температура<span>{{mass_data_temp[4]}}</span></div>
+    <div class="day">Дата:<br><span>{{mass_data_days[5]}}</span>Температура<span>{{mass_data_temp[5]}}</span></div>
+    <div class="day">Дата:<br><span>{{mass_data_days[6]}}</span>Температура<span>{{mass_data_temp[6]}}</span></div>
+</div>
+<style>
+body {
+    text-align:center;
+}
+.day {
+
+    width: 87px;
+    height: 108px;
+    padding: 10px;
+    margin: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+</style>
+</body>
+</html>
