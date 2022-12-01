@@ -2,193 +2,193 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1257</width>
+    <height>1211</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>ToDo</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QLineEdit" name="lineEdit">
     <property name="geometry">
-        <rect>
-            <x>0</x>
-            <y>0</y>
-            <width>1257</width>
-            <height>1211</height>
-        </rect>
+     <rect>
+      <x>60</x>
+      <y>50</y>
+      <width>771</width>
+      <height>55</height>
+     </rect>
     </property>
-    <property name="windowTitle">
-        <string>ToDo</string>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>50</weight>
+      <bold>false</bold>
+     </font>
     </property>
-    <widget class="QWidget" name="centralwidget">
-        <widget class="QLineEdit" name="lineEdit">
-            <property name="geometry">
-                <rect>
-                    <x>60</x>
-                    <y>50</y>
-                    <width>771</width>
-                    <height>55</height>
-                </rect>
-            </property>
-            <property name="font">
-                <font>
-                    <pointsize>10</pointsize>
-                    <weight>50</weight>
-                    <bold>false</bold>
-                </font>
-            </property>
-            <property name="styleSheet">
-                <string notr="true">
+    <property name="styleSheet">
+     <string notr="true">
                     padding:40px 10px; 
                     border:1px solid black;
                 </string>
-            </property>
-            <property name="text">
-                <string></string>
-            </property>
-        </widget>
-        <widget class="QPushButton" name="pushButton">
-            <property name="geometry">
-                <rect>
-                    <x>850</x>
-                    <y>50</y>
-                    <width>101</width>
-                    <height>55</height>
-                </rect>
-            </property>
-            <property name="font">
-                <font>
-                    <pointsize>10</pointsize>
-                    <weight>75</weight>
-                    <bold>true</bold>
-                </font>
-            </property>
-            <property name="styleSheet">
-                <string notr="true">
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton">
+    <property name="geometry">
+     <rect>
+      <x>850</x>
+      <y>50</y>
+      <width>101</width>
+      <height>55</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <pointsize>10</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
                     background-color:white;
                     border:1px solid black;
                 </string>
-            </property>
-            <property name="text">
-                <string>Создать</string>
-            </property>
-        </widget>
-        <widget class="QScrollArea" name="scrollArea">
-            <property name="geometry">
-                <rect>
-                    <x>50</x>
-                    <y>130</y>
-                    <width>900</width>
-                    <height>471</height>
-                </rect>
-            </property>
-            <property name="styleSheet">
-                <string notr="true">
+    </property>
+    <property name="text">
+     <string>Создать</string>
+    </property>
+   </widget>
+   <widget class="QScrollArea" name="scrollArea">
+    <property name="geometry">
+     <rect>
+      <x>50</x>
+      <y>130</y>
+      <width>900</width>
+      <height>471</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">
                     border:0px solid black;
                 </string>
-            </property>
-            <property name="widgetResizable">
-                <bool>true</bool>
-            </property>
-            <widget class="QWidget" name="scrollAreaWidgetContents">
-            <property name="geometry">
-                <rect>
-                    <x>0</x>
-                    <y>0</y>
-                    <width>895</width>
-                    <height>469</height>
-                </rect>
-            </property>
-            <widget class="QWidget" name="verticalLayoutWidget">
-                <property name="geometry">
-                    <rect>
-                        <x>10</x>
-                        <y>10</y>
-                        <width>890</width>
-                        <height>451</height>
-                    </rect>
-                </property>
-                <layout class="QVBoxLayout" name="verticalLayout">
-                    <item>
-                        <widget class="QFrame" name="frame_2">
-                            <property name="minimumSize">
-                                <size>
-                                    <width>100</width>
-                                    <height>60</height>
-                                </size>
-                            </property>
-                            <property name="maximumSize">
-                                <size>
-                                    <width>16777215</width>
-                                    <height>60</height>
-                                </size>
-                            </property>
-                            <property name="styleSheet">
-                                <string notr="true">border:1px solid black;</string>
-                            </property>
-                            <property name="frameShape">
-                                <enum>QFrame::StyledPanel</enum>
-                            </property>
-                            <property name="frameShadow">
-                                <enum>QFrame::Raised</enum>
-                            </property>
-                            <widget class="QPushButton" name="delete_task">
-                                <property name="geometry">
-                                    <rect>
-                                        <x>650</x>
-                                        <y>10</y>
-                                        <width>101</width>
-                                        <height>41</height>
-                                    </rect>
-                                </property>
-                                <property name="text">
-                                    <string>Удалить</string>
-                                </property>
-                            </widget>
-                            <widget class="QPushButton" name="complate_task">
-                                <property name="geometry">
-                                    <rect>
-                                        <x>770</x>
-                                        <y>10</y>
-                                        <width>101</width>
-                                        <height>41</height>
-                                    </rect>
-                                </property>
-                                <property name="text">
-                                    <string>Выполнить</string>
-                                </property>
-                            </widget>
-                            <widget class="QLabel" name="label">
-                                <property name="geometry">
-                                    <rect>
-                                        <x>10</x>
-                                        <y>10</y>
-                                        <width>621</width>
-                                        <height>41</height>
-                                    </rect>
-                                </property>
-                                <property name="text">
-                                    <string>TextLabel</string>
-                                </property>
-                                <property name="styleSheet">
-                                    <string notr="true">
+    </property>
+    <property name="widgetResizable">
+     <bool>true</bool>
+    </property>
+    <widget class="QWidget" name="scrollAreaWidgetContents">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>900</width>
+       <height>471</height>
+      </rect>
+     </property>
+     <widget class="QWidget" name="verticalLayoutWidget">
+      <property name="geometry">
+       <rect>
+        <x>10</x>
+        <y>10</y>
+        <width>890</width>
+        <height>451</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout">
+       <item>
+        <widget class="QFrame" name="frame_2">
+         <property name="minimumSize">
+          <size>
+           <width>100</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="maximumSize">
+          <size>
+           <width>16777215</width>
+           <height>60</height>
+          </size>
+         </property>
+         <property name="styleSheet">
+          <string notr="true">border:1px solid black;</string>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::StyledPanel</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Raised</enum>
+         </property>
+         <widget class="QPushButton" name="delete_task">
+          <property name="geometry">
+           <rect>
+            <x>650</x>
+            <y>10</y>
+            <width>101</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Удалить</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="complate_task">
+          <property name="geometry">
+           <rect>
+            <x>770</x>
+            <y>10</y>
+            <width>101</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Выполнить</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label">
+          <property name="geometry">
+           <rect>
+            <x>10</x>
+            <y>10</y>
+            <width>621</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">
                                         border:0px solid black;
                                     </string>
-                                </property>
-                            </widget>
-                        </widget>
-                    </item>
-                    <item>
-                        <spacer name="verticalSpacer">
-                            <property name="orientation">
-                                <enum>Qt::Vertical</enum>
-                            </property>
-                            <property name="sizeHint" stdset="0">
-                                <size>
-                                    <width>356</width>
-                                    <height>372</height>
-                                </size>
-                            </property>
-                        </spacer>
-                    </item>
-                </layout>
-            </widget>
+          </property>
+          <property name="text">
+           <string>TextLabel</string>
+          </property>
+         </widget>
         </widget>
-        </widget>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>356</width>
+           <height>372</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+      </layout>
+     </widget>
     </widget>
+   </widget>
+  </widget>
  </widget>
  <resources/>
  <connections/>

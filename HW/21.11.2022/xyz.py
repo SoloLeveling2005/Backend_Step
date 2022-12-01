@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
+import json
 
+import requests
 # Form implementation generated from reading ui file 'untitled.ui'
 #
 # Created by: PyQt5 UI code generator 5.15.7
@@ -9,12 +11,20 @@
 
 
 from PyQt5 import QtCore, QtGui, QtWidgets
+headers = {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10.9; rv:45.0) Gecko/20100101 Firefox/45.0'
+}
 
 
 class Ui_MainWindow(object):
+    def __init__(self):
+        self.data = {"title": "Hi"}
+        self.iii = 0
+        self.select_tasks()
+
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(1007, 1001)
+        MainWindow.resize(1257, 1211)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.lineEdit = QtWidgets.QLineEdit(self.centralwidget)
@@ -30,18 +40,19 @@ class Ui_MainWindow(object):
 "                ")
         self.lineEdit.setText("")
         self.lineEdit.setObjectName("lineEdit")
-        self.create = QtWidgets.QPushButton(self.centralwidget)
-        self.create.setGeometry(QtCore.QRect(850, 50, 101, 55))
+        self.pushButton = QtWidgets.QPushButton(self.centralwidget)
+        self.pushButton.setGeometry(QtCore.QRect(850, 50, 101, 55))
         font = QtGui.QFont()
         font.setPointSize(10)
         font.setBold(True)
         font.setWeight(75)
-        self.create.setFont(font)
-        self.create.setStyleSheet("\n"
+        self.pushButton.setFont(font)
+        self.pushButton.setStyleSheet("\n"
 "                    background-color:white;\n"
 "                    border:1px solid black;\n"
 "                ")
-        self.create.setObjectName("pushButton")
+        self.pushButton.setObjectName("pushButton")
+        self.pushButton.clicked.connect(self.create_task)
         self.scrollArea = QtWidgets.QScrollArea(self.centralwidget)
         self.scrollArea.setGeometry(QtCore.QRect(50, 130, 900, 471))
         self.scrollArea.setStyleSheet("\n"
@@ -50,7 +61,7 @@ class Ui_MainWindow(object):
         self.scrollArea.setWidgetResizable(True)
         self.scrollArea.setObjectName("scrollArea")
         self.scrollAreaWidgetContents = QtWidgets.QWidget()
-        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 895, 469))
+        self.scrollAreaWidgetContents.setGeometry(QtCore.QRect(0, 0, 900, 471))
         self.scrollAreaWidgetContents.setObjectName("scrollAreaWidgetContents")
         self.verticalLayoutWidget = QtWidgets.QWidget(self.scrollAreaWidgetContents)
         self.verticalLayoutWidget.setGeometry(QtCore.QRect(10, 10, 890, 451))
@@ -58,26 +69,34 @@ class Ui_MainWindow(object):
         self.verticalLayout = QtWidgets.QVBoxLayout(self.verticalLayoutWidget)
         self.verticalLayout.setContentsMargins(0, 0, 0, 0)
         self.verticalLayout.setObjectName("verticalLayout")
-        self.frame_2 = QtWidgets.QFrame(self.verticalLayoutWidget)
-        self.frame_2.setMinimumSize(QtCore.QSize(100, 60))
-        self.frame_2.setMaximumSize(QtCore.QSize(16777215, 60))
-        self.frame_2.setStyleSheet("border:1px solid black;")
-        self.frame_2.setFrameShape(QtWidgets.QFrame.StyledPanel)
-        self.frame_2.setFrameShadow(QtWidgets.QFrame.Raised)
-        self.frame_2.setObjectName("frame_2")
-        self.delete_task = QtWidgets.QPushButton(self.frame_2)
-        self.delete_task.setGeometry(QtCore.QRect(650, 10, 101, 41))
-        self.delete_task.setObjectName("delete_task")
-        self.complate_task = QtWidgets.QPushButton(self.frame_2)
-        self.complate_task.setGeometry(QtCore.QRect(770, 10, 101, 41))
-        self.complate_task.setObjectName("complate_task")
-        self.label = QtWidgets.QLabel(self.frame_2)
-        self.label.setGeometry(QtCore.QRect(10, 10, 621, 41))
-        self.label.setStyleSheet("\n"
-"                                        border:0px solid black;\n"
-"                                    ")
-        self.label.setObjectName("label")
-        self.verticalLayout.addWidget(self.frame_2)
+
+        if len(self.data) >= 1:
+            self.frame_1 = QtWidgets.QFrame(self.verticalLayoutWidget)
+            self.frame_1.setMinimumSize(QtCore.QSize(100, 60))
+            self.frame_1.setMaximumSize(QtCore.QSize(16777215, 60))
+            self.frame_1.setStyleSheet("border:1px solid black;")
+            self.frame_1.setFrameShape(QtWidgets.QFrame.StyledPanel)
+            self.frame_1.setFrameShadow(QtWidgets.QFrame.Raised)
+            self.frame_1.setObjectName("frame_2")
+            self.delete_task_1 = QtWidgets.QPushButton(self.frame_1)
+            self.delete_task_1.setGeometry(QtCore.QRect(650, 10, 101, 41))
+            self.delete_task_1.setObjectName("delete_task_1")
+            self.delete_task_1.clicked.connect(self.delete_task_f1)
+
+            self.complate_task_1 = QtWidgets.QPushButton(self.frame_1)
+            self.complate_task_1.setGeometry(QtCore.QRect(770, 10, 101, 41))
+            self.complate_task_1.setObjectName("complate_task_1")
+            self.complate_task_1.clicked.connect(self.complete_task_f1)
+
+            self.label_1 = QtWidgets.QLabel(self.frame_1)
+            self.label_1.setGeometry(QtCore.QRect(10, 10, 621, 41))
+            self.label_1.setStyleSheet("\n"
+    "                                        border:0px solid black;\n"
+    "                                    ")
+            self.label_1.setObjectName("label_1")
+            self.verticalLayout.addWidget(self.frame_1)
+
+
         spacerItem = QtWidgets.QSpacerItem(356, 372, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Expanding)
         self.verticalLayout.addItem(spacerItem)
         self.scrollArea.setWidget(self.scrollAreaWidgetContents)
@@ -89,17 +108,56 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "ToDo"))
-        self.create.setText(_translate("MainWindow", "Создать"))
-        self.delete_task.setText(_translate("MainWindow", "Удалить"))
-        self.complate_task.setText(_translate("MainWindow", "Выполнить"))
-        self.label.setText(_translate("MainWindow", "TextLabel"))
+        self.pushButton.setText(_translate("MainWindow", "Создать"))
+        self.delete_task_1.setText(_translate("MainWindow", "Удалить"))
+        self.complate_task_1.setText(_translate("MainWindow", "Выполнить"))
+        self.label_1.setText(_translate("MainWindow", f"{self.data[0]['task_title']}"))
+
+    def delete_task_f1(self):
+        print("delete_task1")
+
+
+    def complete_task_f1(self):
+        print("complete_task1")
+
+    def select_tasks(self):
+        response = requests.get(
+            url="http://127.0.0.1:8000/todo_app/get_tasks/",
+            headers=headers
+        )
+        # data = json.loads(response.content)
+        # self.data = data
+        print("select_tasks")
+        data = response.text
+        print(data)
+        print(json.loads(response.text)['response'])
+        self.data = json.loads(response.text)['response']
+
+    def create_task(self):
+        print("create_task")
+        try:
+            print(f"http://127.0.0.1:8000/todo_app/create_task/{self.lineEdit.text()}")
+            response = requests.post(
+                url=f"http://127.0.0.1:8000/todo_app/create_task/{self.lineEdit.text()}",
+                data=self.lineEdit.text(),
+                headers=headers
+            )
+            print(response)
+            self.select_tasks()
+
+        except Exception as e:
+            print(e)
 
 
 class MainWindow(QtWidgets.QMainWindow, Ui_MainWindow):
+
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
         # + тут ваша логика
+
+
 if __name__ == '__main__':
     import sys
 
