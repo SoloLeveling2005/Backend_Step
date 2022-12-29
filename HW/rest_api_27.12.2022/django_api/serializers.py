@@ -11,7 +11,7 @@ from django_api import models
 #         fields = ['url', 'username', 'email', 'is_staff']
 
 
-class TodoSerializer(serializers.ModelSerializer):
+class PostsSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.Todo
+        model = models.Posts
         fields = "__all__"  # ['id', 'title']

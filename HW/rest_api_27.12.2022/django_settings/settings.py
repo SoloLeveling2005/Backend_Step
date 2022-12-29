@@ -54,6 +54,7 @@ MIDDLEWARE = [
 ]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
+        # 'rest_framework.renderers.<corresponding_renderer>',
         'rest_framework.permissions.DjangoModelPermissions',
     )
 }
