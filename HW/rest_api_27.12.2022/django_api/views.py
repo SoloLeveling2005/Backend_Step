@@ -34,6 +34,7 @@ def index(request):
 @permission_classes((permissions.AllowAny,))
 def posts_one(request: HttpRequest, id="0") -> Response:
     id = int(id)
+    post = request.data.get(id=id)
     if request.method == "GET":
         try:
             data = models.Posts.objects.get(user_id=id)  # TODO QuerySet != JSON
@@ -51,10 +52,13 @@ def posts_one(request: HttpRequest, id="0") -> Response:
     elif request.method in ["PUT", "PATCH"]:
         title = request.data.get("title", None)
         print(title)
-        completed = request.data.get("completed", False)    
-
+        completed = request.data.get("completed", None)
+        if post.title != title and title is not None:
+            post.title = title
+        if post.completed != completed and completed is not None:
+            post.title = completed
     elif request.method == "DELETE":
-        pass
+        post.delete()
 
     return Response(data={"detail": "Successfully deleted"}, status=status.HTTP_200_OK)
 
@@ -63,8 +67,8 @@ def posts_one(request: HttpRequest, id="0") -> Response:
 def posts(request: HttpRequest) -> Response:
     if request.method == "GET":
         data = models.Posts.objects.all()  # TODO QuerySet != JSON
-        data_json = django_serializers.PostsSerializer(instance=data, many=True).data
-        return Response(data={}, status=status.HTTP_200_OK)
+        data_json = django_serializers.PostsSerializer(instance=data, many=True)
+        return Response(data=data_json.data, status=status.HTTP_200_OK)
         pass
     if request.method == "POST":
         user_id = 0
@@ -75,6 +79,7 @@ def posts(request: HttpRequest) -> Response:
 
         if title is None:
             return Response(data={"detail": "Not successfully created"}, status=status.HTTP_204_NO_CONTENT)
+
         new_data_in_db = models.Posts.objects.create(
             user_id=user_id,
             title=title,

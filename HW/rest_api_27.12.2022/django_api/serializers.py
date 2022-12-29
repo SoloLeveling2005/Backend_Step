@@ -15,3 +15,5 @@ class PostsSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Posts
         fields = "__all__"  # ['id', 'title']
+        # fields = ['id']
+
