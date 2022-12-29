@@ -46,9 +46,12 @@ def posts_one(request: HttpRequest, id="0") -> Response:
             print(new_data)
             return Response(data=new_data, status=status.HTTP_200_OK)
         except Exception as e:
-            return Response(data={"error": f"Данных не существует //// {e}"}, status=status.HTTP_204_NO_CONTENT)
+            print(e)
+            return Response(data={"error": f"Данных не существует"}, status=status.HTTP_204_NO_CONTENT)
     elif request.method in ["PUT", "PATCH"]:
-        pass
+        title = request.data.get("title", None)
+        print(title)
+        completed = request.data.get("completed", False)    
 
     elif request.method == "DELETE":
         pass
