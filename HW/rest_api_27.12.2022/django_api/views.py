@@ -34,7 +34,7 @@ def index(request):
 @permission_classes((permissions.AllowAny,))
 def posts_one(request: HttpRequest, id="0") -> Response:
     id = int(id)
-    post = request.data.get(id=id)
+    post = models.Posts.objects.get(id=id)
     if request.method == "GET":
         try:
             data = models.Posts.objects.get(user_id=id)  # TODO QuerySet != JSON
@@ -50,13 +50,15 @@ def posts_one(request: HttpRequest, id="0") -> Response:
             print(e)
             return Response(data={"error": f"Данных не существует"}, status=status.HTTP_204_NO_CONTENT)
     elif request.method in ["PUT", "PATCH"]:
+
         title = request.data.get("title", None)
-        print(title)
         completed = request.data.get("completed", None)
+
         if post.title != title and title is not None:
             post.title = title
         if post.completed != completed and completed is not None:
             post.title = completed
+
     elif request.method == "DELETE":
         post.delete()
 
