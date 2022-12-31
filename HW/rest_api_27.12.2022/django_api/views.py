@@ -34,35 +34,51 @@ def index(request):
 @permission_classes((permissions.AllowAny,))
 def posts_one(request: HttpRequest, id="0") -> Response:
     id = int(id)
-    post = models.Posts.objects.get(id=id)
-    if request.method == "GET":
-        try:
-            data = models.Posts.objects.get(user_id=id)  # TODO QuerySet != JSON
-            new_data = {
-                "userId": data.user_id,
-                "id": data.id,
-                "title": data.title + str(" banana"),
-                "completed": data.completed,
-            }
-            print(new_data)
-            return Response(data=new_data, status=status.HTTP_200_OK)
-        except Exception as e:
-            print(e)
-            return Response(data={"error": f"Данных не существует"}, status=status.HTTP_204_NO_CONTENT)
-    elif request.method in ["PUT", "PATCH"]:
+    try:
+        post = models.Posts.objects.get(id=id)
+        if request.method == "GET":
+            try:
+                datas = []
+                data = models.Posts.objects.filter(user_id=id)  # TODO QuerySet != JSON
+                for one_data in data:
+                    datas.append({
+                        "userId": one_data.user_id,
+                        "id": one_data.id,
+                        "title": one_data.title + str(" banana"),
+                        "completed": one_data.completed,
+                    })
+                print(datas)
+                return Response(data=datas, status=status.HTTP_200_OK)
+            except Exception as e:
+                print(e)
+                return Response(data={"error": f"Данных не существует"}, status=status.HTTP_204_NO_CONTENT)
+        elif request.method in ["PUT", "PATCH"]:
+            message = "Without changes"
+            id = request.data.get("id", None)
+            title = request.data.get("title", None)
+            completed = request.data.get("completed", None)
 
-        title = request.data.get("title", None)
-        completed = request.data.get("completed", None)
+            if id is None:
+                return Response(data={"error": f"При обновлении не был указан id"}, status=status.HTTP_204_NO_CONTENT)
+            else:
+                post = models.Posts.objects.get(id=id)
+                if post.title != title and title is not None:
+                    post.title = title
+                    message = "Successfully update"
+                if post.completed != completed and completed is not None:
+                    post.title = completed
+                    message = "Successfully update"
+                post.save()
 
-        if post.title != title and title is not None:
-            post.title = title
-        if post.completed != completed and completed is not None:
-            post.title = completed
+                return Response(data={"detail": "Successfully update"}, status=status.HTTP_200_OK)
 
-    elif request.method == "DELETE":
-        post.delete()
+        elif request.method == "DELETE":
+            post.delete()
 
-    return Response(data={"detail": "Successfully deleted"}, status=status.HTTP_200_OK)
+            return Response(data={"detail": "Successfully deleted"}, status=status.HTTP_200_OK)
+    except Exception as e:
+        print(e)
+        return Response(data={"error": f"Данных не существует"}, status=status.HTTP_204_NO_CONTENT)
 
 @api_view(http_method_names=["GET", "POST"])
 @permission_classes((permissions.AllowAny,))
@@ -71,7 +87,6 @@ def posts(request: HttpRequest) -> Response:
         data = models.Posts.objects.all()  # TODO QuerySet != JSON
         data_json = django_serializers.PostsSerializer(instance=data, many=True)
         return Response(data=data_json.data, status=status.HTTP_200_OK)
-        pass
     if request.method == "POST":
         user_id = 0
 
@@ -88,11 +103,10 @@ def posts(request: HttpRequest) -> Response:
             completed=completed
         )
         # Content
-        # {
-        #   "title":"text"
-        # }
+        {
+          "title":"text"
+        }
         id_in_db = new_data_in_db.id
         new_data_in_db.user_id = id_in_db // 10 + 1
         new_data_in_db.save()
         return Response(data={"detail": "Successfully created"}, status=status.HTTP_200_OK)
-    return Response(data={"detail": "Successfully deleted"}, status=status.HTTP_200_OK)
