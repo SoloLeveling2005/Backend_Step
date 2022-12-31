@@ -10,7 +10,9 @@ urlpatterns = [
 
     re_path(r'^posts/$', views.posts, name="posts"),
     re_path(r'^posts/(?P<id>\d+)/$', views.posts_one, name="posts_one"),
-    #
+
+
+
     # # TODO rest-api маршруты
     # path('todos_native/', views.todos_native),
     # path('todos_native/<int:pk>/', views.todos_native),
