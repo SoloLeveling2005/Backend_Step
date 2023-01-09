@@ -77,7 +77,7 @@ def posts_one(request: HttpRequest, id="0") -> Response:
 
             return Response(data={"detail": "Successfully deleted"}, status=status.HTTP_200_OK)
     except Exception as e:
-        print(e)
+        print(e, ' ошибка')
         return Response(data={"error": f"Данных не существует"}, status=status.HTTP_204_NO_CONTENT)
 
 @api_view(http_method_names=["GET", "POST"])
