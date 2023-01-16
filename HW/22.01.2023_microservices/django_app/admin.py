@@ -13,7 +13,7 @@ class Books(admin.ModelAdmin):
         'title',
         'description',
         'price',
-        'date_add',
+        # 'date',
         'status',
         'url_img',
 
@@ -22,7 +22,7 @@ class Books(admin.ModelAdmin):
         'title',
         'description',
         'price',
-        'date_add',
+        # 'date',
         'status',
         'url_img',
     )
@@ -33,7 +33,7 @@ class Books(admin.ModelAdmin):
         'title',
         'description',
         'price',
-        'date_add',
+        # 'date',
         'status',
         'url_img',
     )
@@ -42,7 +42,7 @@ class Books(admin.ModelAdmin):
             'title',
             'description',
             'price',
-            'date_add',
+            # 'date',
             'status',
             'url_img',
         )}),
@@ -51,7 +51,7 @@ class Books(admin.ModelAdmin):
         'title',
         'description',
         'price',
-        'date_add',
+        # 'date',
         'status',
         'url_img',
     ]

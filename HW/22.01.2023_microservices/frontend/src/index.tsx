@@ -3,16 +3,30 @@ import { createRoot } from 'react-dom/client';
 import { Provider } from 'react-redux';
 import { store } from './app/store';
 import App from './App';
+// import CheckBook from './components/CheckBook';
 import reportWebVitals from './reportWebVitals';
 import './index.css';
-
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+} from 'react-router-dom';
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <App />
+    <App/>      
+      {/* <Router>
+      <Routes>
+        <Route path="/" element={<App/>} />
+        <Route path="/book/:IdBook" children={<CheckBook/>}/>
+        
+        <Route path="/about" element={<h1>about</h1>} />
+      </Routes>
+      </Router> */}
     </Provider>
   </React.StrictMode>
 );

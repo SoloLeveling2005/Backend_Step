@@ -51,7 +51,7 @@ main .card_book {
 
 main .card_book:hover {
     box-shadow: 0px 0px 5px 1px rgba(0, 0, 0, 0.2);
-    
+    cursor: pointer;
 }
 main .card_book h4, main .card_book h5 {
     width: calc(100% - 20px);
