@@ -9,163 +9,82 @@ import {
 import axios from 'axios';
 import img_test from './images/test.jpg';
 import React, { useEffect, useState } from 'react';
-import { useParams } from '@reach/router';
 import { render } from '@testing-library/react';
 // import { CheckBook } from './components/CheckBook.js';
+import { useParams } from "react-router-dom"
+import { Template } from 'webpack';
 
 
-interface WeatherCardProps {
-  // id: number,
-  // title: string,
-  // description: string,
-  // price:number,
-  // data:number,
-  // in_or_not:boolean,
-  // url_img:string
-}
-
-const WeatherCard = (props:any) => {
-  return (
-    <div>
-        {props}
-    </div>
-  )
-}
-
+var baseURL = 'http://127.0.0.1:8000/api/get_book';
+axios.defaults.baseURL = "http://127.0.0.1:8000/api";
 function App() {
   
 
 
   const [appState, setAppState] = useState();
-  axios.defaults.baseURL = "http://127.0.0.1:8000/api";
-  // let state = {
-  //   persons: []
-  // }
-  // async function getOneUser(id: number){
-  //   const config = {
-  //     url: `/get_book/${id}`,
-  //     method: `GET`,
-  //     timeout: 5000,
 
-  //     data: {},
-  //   };
-  //   const response = await axios(config);
-  //   // @ts-ignore
-  //   console.log(response)
-  // }
-  const baseURL = 'http://127.0.0.1:8000/api/get_book';
 
-      // useEffect(() => {
-        
-      //   axios.get(apiUrl).then((resp) => {
-      //     const allBooks = resp.data;
-      //     setAppState(allBooks);
-      //     console.log(allBooks)
-      //   });
-      // }, [setAppState]);
-
-      // const config = {
-      //   url: `/get_book`,
-      //   method: `GET`,
-      //   timeout: 5000,
-      //   data: {},
-      // };
-      // const response = await axios(config).then(res => {
-      //   const persons = res.data;
-      //   this.setState({ persons });
-      // });
-
-      
-      // console.log(response)
-
-    const [post, setPost] = useState({data:[]});
-    React.useEffect(() => {
-      axios.get(baseURL).then((response) => {
-        setPost(response.data);
-        console.log(response.data)
-      });
-    }, []);
+  const [post, setPost] = useState({data:[]});
+  React.useEffect(() => {
+    axios.get(baseURL).then((response) => {
+      setPost(response.data);
+      console.log(response.data)
+    });
+  }, []);
+  
+  if (!post) return null;
+  
+  let posts = post.data
+  console.log(posts[0]);
     
-    if (!post) return null;
-    
-    let posts = post.data
-    console.log(posts[0]);
-    
-
   return (
     <section className="app">
-      <header>
-        <div className="content">
-          <h1>MyBook</h1>
-          <button className="log_in">Войти</button>
-        </div>
-      </header>
+      
       
 
             <Router>
-            {/* <header>
-              <nav>
-                <ul>
-                  <li>
-                    <Link to="/">Главная</Link>
-                  </li>
-                  <li>
-                    <Link to="/about">Контакты</Link>
-                  </li>
-                  <li>
-                    <Link to="/users">Пользователи</Link>
-                  </li>
-                </ul>
-              </nav>
-            </header>      */}
 
-            <main>
-              {/* <Switch> рендерит первый <Route>, совпавший с URL */}
+
+
                 <Routes>
                   <Route path="/" element={
-                  
+                  <div>
+                  <header>
+                  <div className="content">
+                    <h1 className='title_page'>MyBook</h1>
+                    <button className="log_in">Войти</button>
+                  </div>
+                  </header>
                   <main>
                     <div className="content">
-                      {/* <div className="card_book" id=''> */}
-                        {/* <img src={img_test} alt="" /> */}
-                        {/* <h4 className="title">Подсознание может все</h4> */}
-                        {/* <h5 className="description">Книга «Подсознание может всё!» раскрывает глубины человеческого сознания и повествует о неисчерпаемых ресурсах нашего мозга.</h5> */}
-                        {/*  */}
-                        {/* <h5 className="date_add">Дата публикации: 1997 г.</h5> */}
-                        <br />
-                        {/* <h5 className="price">Цена: 548 р.</h5> */}
-                        {/* <button>Добавить в библиотеку</button> */}
-                      {/* </div> */}
+                      <br />
                       
                       {posts.map((item,index) =>
-                        
-                        <div className="card_book" id={item[0]} key={item[0]}>
-                          {/* {item[]} */}
-                          {/* <img src={require(item[index][6]).default} /> */}
-                          {/* {require(item[index][6])} */}
-                          <img src={"./"+item[6]} alt="" />
-                          <h4 className="title">{item[1]}</h4>
-                          <h5 className="description">{item[2]}</h5>
+                        <Link to={"/book/"+item[0]} className='linkToBook'>
+                          <div className="card_book" id={item[0]} key={item[0]}>
+                            {/* {item[]} */}
+                            {/* <img src={require(item[index][6]).default} /> */}
+                            {/* {require(item[index][6])} */}
+                            <img src={"./"+item[6]} alt="" />
+                            <h4 className="title">{item[1]}</h4>
+                            <h5 className="description">{item[2]}</h5>
 
-                          <h5 className="date_add">Дата публикации: {item[4]} г.</h5>
-                          {/* <br /> */}
-                          <h5 className="price">Цена: {item[3]}</h5>
-                          <button>Добавить в библиотеку</button>
-                        </div>
-
+                            <h5 className="date_add">Дата публикации: {item[4]} г.</h5>
+                            {/* <br /> */}
+                            <h5 className="price">Цена: {item[3]}</h5>
+                            <button>Добавить в библиотеку</button>
+                          </div>
+                        </Link>
                       )}
                     </div>
                   </main>
+                  </div>
                   
                   
                   } />
-                  <Route path="/book/:id" element={
-                    <WeatherCard/>
-                  }/>
-                  
-                  <Route path="/about" element={<h1>about</h1>} />
+                  <Route path="/book/:id" element={<CheckBook />} />
+
                 </Routes>
-            </main>
           </Router>
     </section>
   
@@ -173,29 +92,54 @@ function App() {
 }
 function CheckBook() {
 
-  let { id } = useParams();
-  // const baseURL = 'http://127.0.0.1:8000/api/get_book/';
-  console.log(id)
-  // // const [appState, setAppState] = useState();
-  // const [post, setPost] = useState({data:[]});
-  // React.useEffect(() => {
-  //   axios.get(baseURL).then((response) => {
-  //     setPost(response.data);
-  //     console.log(response.data)
-  //   });
-  // }, []);
-  
-  // if (!post) return null;
-  
-  // let posts = post.data
-  // console.log(posts[0]);
 
-  return (
-    <section className="app">
-      
-    </section>
+
+
   
-  );
+  const { id } = useParams()
+  console.log(id)
+  let URL = baseURL+"/"+id
+  const [appState, setAppState] = useState();
+  const [post, setPost] = useState({data:[]});
+    React.useEffect(() => {
+      axios.get(URL).then((response) => {
+        setPost(response.data);
+        console.log(response.data)
+      });
+    }, []);
+    
+    if (!post) return null;
+    
+    let post_one = post.data
+    console.log('post_one',post_one);
+  return (  
+    <div>
+      <header>
+        <div className="content">
+          <Link to="/" className=''><h1 className=''>MyBook</h1></Link>
+          <button className="log_in">Войти</button>
+        </div>
+      </header>
+      <main>
+      
+        
+        {post_one.map((data) => (
+          <div className="content info">
+            <img src={"../"+data[6]} alt="" />
+            <div className='content'>
+              <h1>{data[1]}</h1>
+              <h4>{data[2]}</h4>
+              <h4 className="date_add">Дата публикации: {data[4]} г.</h4>
+              <h4 className="price">Цена: {data[3]}</h4>
+              <button>Добавить в библиотеку</button>
+            </div>
+          </div> 
+        ))}
+       
+      </main>
+    </div>
+    
+  )
 }
 
 export default App;
