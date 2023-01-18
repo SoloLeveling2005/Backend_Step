@@ -179,6 +179,7 @@ if DEBUG:
     STATICFILES_DIRS = [
         Path(BASE_DIR, 'static'),
         Path(BASE_DIR, 'frontend/public/static'),
+        Path(BASE_DIR, 'frontend/public'),
         Path(BASE_DIR, 'frontend/build/static'),
     ]
 else:

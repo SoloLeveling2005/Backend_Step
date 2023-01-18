@@ -23,11 +23,17 @@ def index(request):
 def get_book(request, book_id: str = "-1"):
     book_id = int(book_id)
     if book_id < 0:
+        info = f"User went in main page"
         data = requests.get(f"http://127.0.0.1:5000/api/get_all_books").json()
+        new_info = requests.get(f"http://127.0.0.1:6000/log/{info}").json()
+        print(new_info)
         # print(data)
         return Response(data=data, status=status.HTTP_200_OK)
     else:
+        info = f"User open book with id = {book_id}"
         data = requests.get(f"http://127.0.0.1:5000/api/get_book/{book_id}").json()
+        new_info = requests.get(f"http://127.0.0.1:6000/log/{info}").json()
+        print(new_info)
         # print(data)
         return Response(data=data, status=status.HTTP_200_OK)
     # data = requests.get(f"http://127.0.0.1:8001/api/v2/users/{pk}")
