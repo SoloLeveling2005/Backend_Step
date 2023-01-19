@@ -5,13 +5,12 @@ from flask import Flask
 
 app = Flask(__name__)
 
-
 @app.route("/api/get_all_books/")
 def get_all_books():
     connection = psycopg2.connect(
         user="postgres",
-        password="Solo2005",
-        host="127.0.0.1",
+        password="postgres",
+        host="192.168.0.40",
         port="5432",
         dbname="microservices",
     )
@@ -29,8 +28,8 @@ def get_book(book_id:str):
     book_id = int(book_id)
     connection = psycopg2.connect(
         user="postgres",
-        password="Solo2005",
-        host="127.0.0.1",
+        password="postgres",
+        host="192.168.0.40",
         port="5432",
         dbname="microservices",
     )
