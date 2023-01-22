@@ -1,5 +1,6 @@
 from datetime import datetime
 import pytz
+import requests
 
 from django.http import HttpResponse, HttpRequest, JsonResponse, HttpResponsePermanentRedirect
 from django.urls import reverse
@@ -57,6 +58,10 @@ def task(request: HttpRequest, id: int, user_id=-1):
                 task.delete()
                 # return Response(data={"detail": "Successfully deleted"}, status=status.HTTP_200_OK)
                 # return HttpResponsePermanentRedirect("/")
+
+                mess = f"User with id = {task.user_id} delete task with id = {id}"
+                response1 = requests.get(f"http://127.0.0.2:8000/new_log/{mess}")
+
                 return redirect(reverse('django_app:index', kwargs={"user_id": user_id}))
             except Exception as e:
                 print(e)
@@ -89,12 +94,13 @@ def task(request: HttpRequest, id: int, user_id=-1):
             # }
             new_data_in_db.save()
 
-            try:
-                # return HttpResponsePermanentRedirect("/")
-                return redirect(reverse('django_app:index', kwargs={"user_id": user_id}))
-            except Exception as e:
-                print(e)
-                return Response(data={"error": f"Данных не существует"}, status=status.HTTP_204_NO_CONTENT)
+            mess = f"User with id = {user_id} crate task on {created}"
+            response1 = requests.get(f"http://127.0.0.2:8000/new_log/{mess}")
+
+
+            # return HttpResponsePermanentRedirect("/")
+            return redirect(reverse('django_app:index', kwargs={"user_id": user_id}))
+
     else:
         return Response(data={"error": f"Вы не авторизованы"}, status=status.HTTP_401_UNAUTHORIZED)
 

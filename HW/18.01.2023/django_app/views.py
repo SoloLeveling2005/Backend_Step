@@ -1,6 +1,7 @@
 from datetime import datetime
 
 import pytz
+import requests
 from django.http import HttpResponse, HttpRequest, JsonResponse, HttpResponsePermanentRedirect
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
@@ -20,6 +21,10 @@ def index(request: HttpRequest, id=-1, user_id=-1):
             task = models.Tasks.objects.filter(user_id=user_id)  # TODO QuerySet != JSON
             print(task)
             data_json = django_serializers.PostsSerializer(instance=task, many=True)
+
+            # mess = f"Пользователь с id = {task.user_id} зашел на главную страницу"
+            # response1 = requests.get(f"http://127.0.0.2:8000/new_log/{mess}")
+
             return render(request, 'index.html', context={"todos": task, "user_id":user_id})
         else:
             if request.method == "GET":

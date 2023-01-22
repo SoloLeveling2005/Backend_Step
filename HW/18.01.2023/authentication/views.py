@@ -43,6 +43,10 @@ def index(request: HttpRequest,):
             if response['status'] == "failure":
                 return render(request, 'auth.html')
             # user = models.Users.objects.get(username=username, password=password)
+
+            mess = f"User {username} logged in"
+            response1 = requests.get(f"http://127.0.0.2:8000/new_log/{mess}")
+
             return redirect(reverse('django_app:index', kwargs={"user_id": response['user_id']}))
         elif auth is not None:
             try:
@@ -50,6 +54,10 @@ def index(request: HttpRequest,):
                 response = requests.get(f'http://localhost:5000/auth/{username}/{password}').json()
                 if response['status'] == "failure":
                     return render(request, 'auth.html')
+
+                mess = f"User {username} logged in"
+                response1 = requests.get(f"http://127.0.0.2:8000/new_log/{mess}")
+
                 return redirect(reverse('django_app:index', kwargs={"user_id": response['user_id']}))
             except Exception as e:
                 print(e)
