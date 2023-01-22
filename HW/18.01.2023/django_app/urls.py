@@ -5,10 +5,10 @@ from django_app import views
 
 app_name = 'django_app'
 urlpatterns = [
-    path('', views.index, name="tasks"),
+    # path('', views.index, name="tasks"),
 
     # re_path(r'^tasks/$', views.tasks, name="tasks"),
-    # re_path(r'^tasks/(?P<id>\d+)/$', views.tasks, name="task"),
+    re_path(r'^user/(?P<user_id>\d+)/$', views.index, name="index"),
 
 
 

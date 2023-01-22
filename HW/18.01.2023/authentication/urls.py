@@ -1,14 +1,13 @@
-
 from django.urls import path, re_path
-from django_api import views
+from authentication import views
 
 
-app_name = 'django_api'
+app_name = 'authentication'
 urlpatterns = [
-    # path('', views.index, name="index"),
+    path('', views.index, name="index"),
 
-    re_path(r'^user/(?P<user_id>\d+)/tasks/$', views.tasks, name="tasks"),
-    re_path(r'^user/(?P<user_id>\d+)/task/(?P<id>\d+)/$', views.task, name="task"),
+    # re_path(r'^auth/$', views.tasks, name="tasks"),
+    # re_path(r'^user/(?P<user_id>\d+)/$', views.index, name="index"),
 
 
 
