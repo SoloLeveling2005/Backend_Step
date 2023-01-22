@@ -8,25 +8,34 @@ class Users(admin.ModelAdmin):
     """
 
     list_display = (
-        'id',
-
+        # 'id',
+        'username',
+        'password',
     )
     list_display_links = (
-        'id',
+        # 'id',
+        'username',
+        'password',
     )
     list_editable = (
         # 'title',
     )
     list_filter = (
-        'id',
+        # 'id',
+        'username',
+        'password',
     )
     fieldsets = (
         ('Основное', {'fields': (
-            'id',
+            # 'id',
+            'username',
+            'password',
         )}),
     )
     search_fields = [
-        'id',
+        # 'id',
+        'username',
+        'password',
     ]
 
 

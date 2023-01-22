@@ -20,7 +20,7 @@ def index(request: HttpRequest, id=-1, user_id=-1):
             task = models.Tasks.objects.filter(user_id=user_id)  # TODO QuerySet != JSON
             print(task)
             data_json = django_serializers.PostsSerializer(instance=task, many=True)
-            return render(request, 'index.html', context={"todos": task})
+            return render(request, 'index.html', context={"todos": task, "user_id":user_id})
         else:
             if request.method == "GET":
                 try:

@@ -57,8 +57,9 @@ def task(request: HttpRequest, id: int, user_id=-1):
                 task.delete()
                 # return Response(data={"detail": "Successfully deleted"}, status=status.HTTP_200_OK)
                 # return HttpResponsePermanentRedirect("/")
-                return redirect(reverse('django_app:index', kwargs={user_id: user_id}))
-            except:
+                return redirect(reverse('django_app:index', kwargs={"user_id": user_id}))
+            except Exception as e:
+                print(e)
                 return Response(data={"error": f"недостаточно прав доступа"}, status=status.HTTP_403_FORBIDDEN)
 
         elif request.method == "POST":
@@ -90,7 +91,7 @@ def task(request: HttpRequest, id: int, user_id=-1):
 
             try:
                 # return HttpResponsePermanentRedirect("/")
-                return redirect(reverse('django_app:index', kwargs={user_id: user_id}))
+                return redirect(reverse('django_app:index', kwargs={"user_id": user_id}))
             except Exception as e:
                 print(e)
                 return Response(data={"error": f"Данных не существует"}, status=status.HTTP_204_NO_CONTENT)

@@ -8,7 +8,7 @@ urlpatterns = [
     # path('', views.index, name="tasks"),
 
     # re_path(r'^tasks/$', views.tasks, name="tasks"),
-    re_path(r'^/(?P<user_id>\d+)/$', views.index, name="index"),
+    re_path(r'^(?P<user_id>\d+)/$', views.index, name="index"),
 
 
 
