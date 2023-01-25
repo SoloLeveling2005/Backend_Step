@@ -1,3 +1,42 @@
+body {
+  width:100vw;
+  height: 100vh;
+  background-color: #f8f9fa;
+  padding: 20px 0;
+}
+header {
+  width: 100%;
+  padding: 10px 10%;
+  /* height: 40px; */
+  background-color: #343a40;
+  color: white;
+  margin-bottom: 20px;
+}
+.tasks {
+  background-color: #ffffff;
+  border: 2px solid #dfdfdf;
+  border-radius: 6px;
+  width: 80%;
+  margin: 0 auto;
+  /* height: ; */
+}
+.tasks .header {
+  width: 100%;
+  padding: 15px 25px;
+  border-bottom: 2px solid #dfdfdf;
+}
+.tasks .header h4 {
+  padding: 0;
+  margin: 0;
+}
+
+.tasks .main {
+  padding: 15px 25px;
+}
+.task {
+  padding-top: 10px;
+}
+
 .App {
   text-align: center;
 }
@@ -36,4 +75,20 @@
   100% {
     transform: translateY(0px);
   }
+}
+
+
+
+
+
+.form-37 {
+  border:1px solid #dfdfdf; border-radius:7px; background-color: #f5f5f5;
+}
+
+.input-41 {
+  border: 0;background-color: #f5f5f5;
+}
+
+.button-1 {
+  border-top-left-radius: 0px; border-bottom-left-radius: 0px;
 }

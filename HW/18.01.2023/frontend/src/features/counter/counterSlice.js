@@ -10,6 +10,9 @@ export const counterSlice = createSlice({
       console.log(actions.payload)
       state.mass.push(actions.payload)
     },
+    cleanTasks: (state) => {
+      state.mass = []
+    }
   },
 })
 
