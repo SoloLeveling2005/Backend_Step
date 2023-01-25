@@ -1,0 +1,45 @@
+{% extends 'component/base.html' %}
+
+{% block main %}
+    <div class="tasks">
+        <div class="header">
+            <h4>TODO LIST</h4>
+        </div>
+        <div class="main">
+            <div class="">
+                <form action="{% url 'django_api:task' id=0 user_id=user_id %}" method="POST">
+                    {% csrf_token %}
+                    <div class="input-group flex-nowrap">
+                        <input type="text" class="form-control" placeholder="Введите название задачи" name="title">
+
+                        <button type="submit" class="btn btn-success">Создать</button>
+                    </div>
+                </form>
+            </div>
+            
+            {% for i in todos %}
+            
+            <div class="task" id="{{i.id}}">
+                <form action="{% url 'django_api:task' id=i.id user_id=i.user_id %}" method="POST" class="d-flex align-items-center justify-content-between" style="border:1px solid #dfdfdf; border-radius:7px; background-color: #f5f5f5;">
+                    {% csrf_token %}
+                    <div class="form-group w-100">
+                        <input type="hidden" name="_method" value="DELETE">
+                        <input type="text" class="form-control" value={{i.title}} style="border: 0;background-color: #f5f5f5;">
+                    </div>
+                    <button type="submit" class="btn btn-danger" style="  border-top-left-radius: 0px; border-bottom-left-radius: 0px;">Удалить</button>
+                  </form>
+                <!-- <form action="" method="UPDATE" class="w-100" content>
+
+                            <div class="form-group">
+                              <label>{{i.title}}</label>
+                              <input type="hidden" class="form-control" placeholder="Введите текст задачи">
+                            </div>
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+
+                </form> -->
+            </div>
+            {% endfor %}
+        </div>
+        
+    </div>
+{% endblock main %}
