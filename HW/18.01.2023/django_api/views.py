@@ -54,18 +54,30 @@ def task(request: HttpRequest, id: int, user_id=-1):
 
         elif request.method == "DELETE" or delete is not None:
             try:
-                task = models.Tasks.objects.get(id=id, user_id=user_id)
+                task = models.Tasks.objects.get(id=id)
                 task.delete()
                 # return Response(data={"detail": "Successfully deleted"}, status=status.HTTP_200_OK)
                 # return HttpResponsePermanentRedirect("/")
 
                 mess = f"User with id = {task.user_id} delete task with id = {id}"
-                response1 = requests.get(f"http://127.0.0.2:8000/new_log/{mess}")
+                # response1 = requests.get(f"http://127.0.0.2:8000/new_log/{mess}")
 
-                return redirect(reverse('django_app:index', kwargs={"user_id": user_id}))
-            except Exception as e:
-                print(e)
-                return Response(data={"error": f"недостаточно прав доступа"}, status=status.HTTP_403_FORBIDDEN)
+                print("Удалил \n\n\n")
+                return Response(data={"status": f"OK"}, status=status.HTTP_200_OK)
+                # return redirect(reverse('django_app:index', kwargs={"user_id": user_id}))
+            except:
+                task = models.Tasks.objects.get(id=id)
+                task.delete()
+                # return Response(data={"detail": "Successfully deleted"}, status=status.HTTP_200_OK)
+                # return HttpResponsePermanentRedirect("/")
+
+                mess = f"User with id = {task.user_id} delete task with id = {id}"
+                # response1 = requests.get(f"http://127.0.0.2:8000/new_log/{mess}")
+
+                print("Удалил \n\n\n")
+                return Response(data={"status": f"OK"}, status=status.HTTP_200_OK)
+                # return redirect(reverse('django_app:index', kwargs={"user_id": user_id}))
+
 
         elif request.method == "POST":
             # task = models.Tasks.objects.get(id=id)
@@ -95,11 +107,12 @@ def task(request: HttpRequest, id: int, user_id=-1):
             new_data_in_db.save()
 
             mess = f"User with id = {user_id} crate task on {created}"
-            response1 = requests.get(f"http://127.0.0.2:8000/new_log/{mess}")
+            # response1 = requests.get(f"http://127.0.0.2:8000/new_log/{mess}")
 
 
             # return HttpResponsePermanentRedirect("/")
-            return redirect(reverse('django_app:index', kwargs={"user_id": user_id}))
+            return Response(data={"status": f"OK"}, status=status.HTTP_200_OK)
+            # return redirect(reverse('django_app:index', kwargs={"user_id": user_id}))
 
     else:
         return Response(data={"error": f"Вы не авторизованы"}, status=status.HTTP_401_UNAUTHORIZED)

@@ -1,58 +1,84 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { newTask } from './counterSlice'
+import { newTask, fetchTasksCreator } from './counterSlice'
 import '../../App.css';
 
 
 export function Counter() {
-  // const count = useSelector((state) => state.counter.value)
-  const mass = useSelector((state) => state.counter.mass)
+  const [title, setTitle] = React.useState(''); 
+  let mass = useSelector((state) => state.counter.mass)
   const dispatch = useDispatch()
+  console.log(typeof(mass))
 
+  let fetchTasks = () => {
+    fetch("http://127.0.0.1:8000/api/user/1/tasks")
+    .then(res => res.json())
+    .then(results => dispatch(fetchTasksCreator(results)))
+  }
   let createTasks = function () {
-    let text_in_input = document.querySelector('#new_todo').value
-    dispatch(newTask(text_in_input))
+    dispatch(newTask(title))
+    setTitle('');
+
+    let data = {
+      "title": title,
+    };
+    
+    fetch('http://127.0.0.1:8000/api/user/1/task/1/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      },
+      body: JSON.stringify(data)
+    });
+    // setTimeout(1000, fetchTasks())
+  }
+  
+
+  let deleteTask = (del_id) => {
+    fetch('http://127.0.0.1:8000/api/user/1/task/'+del_id+'/', {
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8'
+      }
+    });
+    console.log(del_id)
+    setTimeout(1000, fetchTasks())
+    
   }
 
+  React.useEffect(() => {
+    fetchTasks()
+  }, [])
+
+  
   return (
-    <div class="tasks">
-        <div class="header">
+    <div className="tasks">
+        <div className="header">
             <h4>TODO LIST</h4>
         </div>
-        <div class="main">
-            <div class="">
-                <form action="{% url 'django_api:task' id=0 user_id=user_id %}" method="POST">
-                    {/* {% csrf_token %} */}
-                    <div class="input-group flex-nowrap">
-                        <input type="text" class="form-control" placeholder="Введите название задачи" name="title"></input>
-
-                        <button type="submit" class="btn btn-success">Создать</button>
+        <div className="main">
+            <div className="">
+                <form>
+                    <div className="input-group flex-nowrap">
+                        <input type="text" onChange={(e) => setTitle(e.target.value)} value={title} className="form-control" placeholder="Введите название задачи" name="title" id="new_todo" />
+                        <button type="button" className="btn btn-success" onClick={() => createTasks()}>Создать</button>
                     </div>
                 </form>
             </div>
-            
-            {/* {% for i in todos %} */}
-            
-            <div class="task" id="{{i.id}}">
-                <form action="{% url 'django_api:task' id=i.id user_id=i.user_id %}" method="POST" class="d-flex align-items-center justify-content-between form-37">
-                    {/* {% csrf_token %} */}
-                    <div class="form-group w-100">
+            {/* {mass} */}
+            {mass.map(element => (
+              
+              <div className="task" id={element.id}>
+                <form className="d-flex align-items-center justify-content-between form-37">
+                    <div className="form-group w-100">
                         <input type="hidden" name="_method" value="DELETE"></input>
-                        <input type="text" class="form-control input-41" value="{{i.title}}"></input>
+                        <input type="text" className="form-control input-41" value={element.title}></input>
                     </div>
-                    <button type="submit" class="btn btn-danger button-1">Удалить</button>
+                    <button type="button" className="btn btn-danger button-1" onClick={() => deleteTask(element.id)}>Удалить</button>
                   </form>
-                {/* <!-- <form action="" method="UPDATE" class="w-100" content>
-
-                            <div class="form-group">
-                              <label>{{i.title}}</label>
-                              <input type="hidden" class="form-control" placeholder="Введите текст задачи">
-                            </div>
-                            <button type="submit" class="btn btn-danger">Удалить</button>
-
-                </form> --> */}
-            </div>
-            {/* {% endfor %} */}
+              </div>
+            ))}
+            
         </div>
         
     </div>

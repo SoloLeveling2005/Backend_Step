@@ -26,6 +26,10 @@ SECRET_KEY = 'django-insecure-855xvxx6=%&na$2$#f3d@8#(4npzer16mr!m&p@ek1cqxtp!td
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+CORS_ORIGIN_WHITELIST = [
+    'http://127.0.0.1:3000'
+]
+
 
 
 # Application definition
@@ -46,6 +50,11 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+
+
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -54,7 +63,34 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+# Пока оставить
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
+CORS_ALLOW_HEADERS = [
+    'accept',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+]
+
+# Пока оставить
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://\w+\.domain\.com$",
+]
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         # 'rest_framework.renderers.<corresponding_renderer>',
@@ -68,7 +104,7 @@ ROOT_URLCONF = 'django_settings.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS':  [BASE_DIR / "frontend"],
+        'DIRS':  [BASE_DIR / "frontend/build"],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
