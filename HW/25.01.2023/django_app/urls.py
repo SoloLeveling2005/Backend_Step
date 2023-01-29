@@ -3,5 +3,6 @@ from django_app import views
 from django.views.decorators.cache import cache_page
 
 urlpatterns = [
-    path("index/<str:city>", views.index, name="index"),
+    path("weather/", views.weather, name="weather"),
+    path("money/", views.money, name="money"),
 ]
