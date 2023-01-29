@@ -49,11 +49,17 @@ def weather(request):
 
 def money(request):
     time_start = time.perf_counter()
-    browser = webdriver.Chrome()
-    browser.get('https://finance.rambler.ru/calculators/converter/1-KZT-USD/')
 
-    element = browser.find_element(By.CLASS_NAME, 'converter-display__currency-wrapper')
-    data = element.text
-    print(data)
+    money_ = LocMemCache.get("money_")
+    if money_ is None:
+        browser = webdriver.Chrome()
+        browser.get('https://finance.rambler.ru/calculators/converter/1-KZT-USD/')
+
+        usd_to_kzt_and_kzt_to_usd  = browser.find_elements(By.CLASS_NAME, 'converter-display__column')
+
+        data = [i.text for i in usd_to_kzt_and_kzt_to_usd]
+        money_ = data
+        LocMemCache.set("money_", data, timeout=5)
+
     time_end = time.perf_counter()
-    return render(request, "money.html", context={"result": data, "time": round(time_end - time_start, 6)})
+    return render(request, "money.html", context={"result": money_, "time": round(time_end - time_start, 6)})

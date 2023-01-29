@@ -5,6 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-{{ result }}
+{% for i in result %}
+
+    <h2 style="margin: 0; padding: 0;">{{ i }}</h2>
+    <br>
+
+{% endfor %}
+
+<h3>Время затраченное на обработку запроса: {{ time }}</h3>
+
 </body>
 </html>
