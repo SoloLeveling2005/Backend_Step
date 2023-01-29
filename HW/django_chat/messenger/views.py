@@ -11,11 +11,14 @@ def index(request):
     user_id_cookie = request.COOKIES.get('username')
     if user_id_cookie is not None:
         rooms = models.Room.objects.all()
-        room = models.Room.objects.get(slug=1)
-        messages = models.Message.objects.filter(room=room)
+        user = models.User.objects.get(name=user_id_cookie)
+        print("user.id", user.id)
+        # room = models.Room.objects.get(slug=1)
+        # messages = models.Message.objects.filter(room=room)
         response = render(request, "index.html", context={"rooms": rooms,
-                                                          "messages": messages,
-                                                          "username": user_id_cookie})
+                                                          # "messages": messages,
+                                                          "username": user_id_cookie,
+                                                          "user_id": user.id})
         return response
     else:
         return redirect('auth')
@@ -45,4 +48,3 @@ def auth(request):
             response.set_cookie('username', username)
 
             return response
-
