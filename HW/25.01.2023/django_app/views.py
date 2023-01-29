@@ -4,6 +4,8 @@ import requests
 from bs4 import BeautifulSoup
 from django.shortcuts import render
 from django.core.cache import caches
+from selenium import webdriver
+from selenium.webdriver.common.by import By
 
 # Create your views here.
 LocMemCache = caches["default"]
@@ -42,7 +44,16 @@ def weather(request):
 
     time_end = time.perf_counter()
     return render(request, "weather.html", context={"result": weathers, "time": round(time_end - time_start, 6)})
-
+    # Без кеша запрос длиться 0,463819 секунды
+    # С использованием кеша запрос длиться 0,00002 секунды
 
 def money(request):
-    pass
+    time_start = time.perf_counter()
+    browser = webdriver.Chrome()
+    browser.get('https://finance.rambler.ru/calculators/converter/1-KZT-USD/')
+
+    element = browser.find_element(By.CLASS_NAME, 'converter-display__currency-wrapper')
+    data = element.text
+    print(data)
+    time_end = time.perf_counter()
+    return render(request, "money.html", context={"result": data, "time": round(time_end - time_start, 6)})
