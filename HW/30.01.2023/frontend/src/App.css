@@ -29,3 +29,8 @@ header {
 a {
   text-decoration: none;
 }
+
+
+form {
+  padding: 10px;
+}
