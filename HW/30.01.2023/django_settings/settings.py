@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+from corsheaders.middleware import CorsMiddleware
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -27,6 +28,15 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
+# CORS_ORIGIN_ALLOW_ALL = True
+# CORS_URLS_REGEX = r"^/api/.*$"
+CORS_ALLOWED_ORIGINS = [
+    "https://example.com",
+    "https://sub.example.com",
+    "http://localhost:8080",
+    "http://localhost:3000",
+    "http://127.0.0.1:9000",
+]
 
 # Application definition
 
@@ -38,9 +48,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+
     'django_api',
     'django_app',
     'rest_framework',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +63,11 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+
+    # CorsMiddleware,
+
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'django_settings.urls'
@@ -74,10 +91,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'django_settings.wsgi.application'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': (
-        # 'rest_framework.renderers.<corresponding_renderer>',
-        'rest_framework.permissions.DjangoModelPermissions',
-    )
+    'DEFAULT_PERMISSION_CLASSES': [
+       'rest_framework.permissions.AllowAny',
+    ]
 }
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -91,11 +107,11 @@ REST_FRAMEWORK = {
 DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql_psycopg2',
-            'NAME': 'microservices',
+            'NAME': 'postgres',
             'USER': 'postgres',
-            'PASSWORD': 'Solo2005',
+            'PASSWORD': '2023',
             'HOST': 'localhost',
-            'PORT': '5432',
+            'PORT': '5433',
         }
     }
 
@@ -136,9 +152,10 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 STATICFILES_DIRS = [
-    Path(BASE_DIR, 'frontend/build/static')
+    Path(BASE_DIR, 'frontend/build/static'),
+    Path(BASE_DIR, 'staticfiles')
 ]
-
+# STATIC_ROOT = BASE_DIR / "staticfiles"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
