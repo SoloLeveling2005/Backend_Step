@@ -2,10 +2,12 @@ import React, {useEffect} from 'react';
 import './../App.css';
 import {useDispatch, useSelector} from "react-redux";
 // import axios from "axios";
-import {fetchGetTodos, fetchPostTodos, fetchDeleteTodos} from "../asyncAction/customers";
-
+import {fetchDeleteTodos, fetchGetTodos, fetchPostTodos} from "../asyncAction/customers";
+import {useCookies} from 'react-cookie';
 
 function ToDo() {
+    let [cookies, setCookie, removeCookie] = useCookies(['csrftoken']);
+
     const [newTodoText, setInputValue] = React.useState("");
     const [dataTodos, setDataTodos] = React.useState([]);
     const dispatch = useDispatch()
@@ -23,12 +25,14 @@ function ToDo() {
         // @ts-ignore
         dispatch(fetchPostTodos(newTodoText))
         setInputValue("");
+        // @ts-ignore
+
     }
 
     const deleteTodo = (id_:string) => {
         dispatch({type:'deleteTodos', payload:id_})
         // @ts-ignore
-        dispatch(fetchDeleteTodos(id_))
+        dispatch(fetchDeleteTodos(id_));
     }
 
     useEffect(() => {
@@ -36,11 +40,16 @@ function ToDo() {
         // @ts-ignore
         dispatch(fetchGetTodos())
         console.log('end')
-    }, [dataTodos]);
+    }, []);
 
+    console.log(cookies)
+
+    // @ts-ignore
+    const {name} = cookies;
     return (
         <div className="App" >
             <form>
+
                 <div className="mb-3">
                     <label htmlFor="exampleInputTitle" className="form-label">Введите название задачи</label>
                     <input type="text"
@@ -49,12 +58,14 @@ function ToDo() {
                            aria-describedby="emailHelp"
                            onChange={changeTextNewTodo}
                            value={newTodoText}/>
+                    {name}
                 </div>
-                <button type="button" className="btn btn-primary w-100" onClick={() => newTodo()}>Добавить</button>
+                <button type="button" className="btn btn-primary w-100" onClick={() => newTodo()}>Создать</button>
             </form>
-            {todos.map((todo: any) => 
+            {todos.map((todo: any) =>
                 <div key={todo.id} className={'card'}>
                     <span>{todo.title}</span>
+                    {todo.id}
                     <button
                         type="button"
                         className="btn-close"

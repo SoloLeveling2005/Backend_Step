@@ -2,6 +2,8 @@ import json
 import time
 
 from django.http import HttpResponse, HttpRequest, JsonResponse
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import ensure_csrf_cookie, csrf_protect
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
@@ -12,7 +14,15 @@ from django_api import models
 from django_api import serializers as django_serializers
 
 
-@api_view(http_method_names=["GET","POST","DELETE","OPTIONS"])
+# @method_decorator(ensure_csrf_cookie, name='dispatch')
+# class GetCSRFToken:
+#     permissions_classes = (permissions.AllowAny, )
+#
+#     def get(self):
+#         return Response({'success': 'CSRF Cookie set'})
+#
+
+@api_view(http_method_names=["POST", "GET", "DELETE"])
 @permission_classes((permissions.AllowAny,))
 def index(request):
     print("index")
@@ -20,11 +30,10 @@ def index(request):
         data = models.ToDo.objects.all()
         data_json = django_serializers.ToDosSerializer(instance=data, many=True).data
         return Response(data=data_json, status=status.HTTP_200_OK)
-    if request.method == "POST":
+    elif request.method == "POST":
         try:
-            print(request.body)
-            jsonResponse = json.loads(request.body.decode('utf-8'))
-            title = jsonResponse['title']
+            print(request.data)
+            title = request.data['title']
             # print(request.POST['title'])
             models.ToDo.objects.create(title=title)
             data = models.ToDo.objects.all()
@@ -34,12 +43,10 @@ def index(request):
             print(e)
             print('error')
             return Response(data=str(e), status=status.HTTP_204_NO_CONTENT)
-    if request.method == "DELETE":
+    elif request.method == "DELETE":
         try:
-            time.sleep(4)
-            print(request.body)
-            jsonResponse = json.loads(request.body.decode('utf-8'))
-            id_ = jsonResponse['id']
+            print(request.data)
+            id_ = request.data['id']
             data_model = models.ToDo.objects.get(id=id_)
             data_model.delete()
             data = models.ToDo.objects.all()
@@ -55,3 +62,4 @@ def index(request):
 # def create_todo(request, title: str):
 #     data = models.ToDo.objects.create(title=title)
 #     return Response(data=data, status=status.HTTP_200_OK)
+

@@ -18,6 +18,7 @@ export const reducer = (state = defaultState, action:any) => {
             // @ts-ignore
             return {...state, todos: state.todos}
         case fetchTodo:
+            state.todos = []
             for (let todo of action.payload)  {
                 // @ts-ignore
                 state.todos.push(todo)

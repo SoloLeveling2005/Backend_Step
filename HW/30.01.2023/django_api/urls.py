@@ -3,8 +3,13 @@ from django.urls import path, re_path
 from django_api import views
 from django.conf import settings
 from django.conf.urls.static import static
+
+# from django_api.views import GetCSRFToken
+
 urlpatterns = [
-    path('', views.index, name="index"),
+    path('api/', views.index, name="index"),
+    # path(r'api1/', views.index1, name="index1"),
+    # path('csrf_token/', GetCSRFToken.as_view())
     # path('posts/', views.index, name="posts"),
     # path('posts/<id:int>', views.index, name="posts"),
     # path('posts/<id:int>/comment', views.index, name="posts"),
