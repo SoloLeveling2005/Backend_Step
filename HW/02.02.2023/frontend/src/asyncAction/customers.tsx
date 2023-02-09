@@ -14,7 +14,7 @@ export const fetchGetTodos = () => {
     }
 }
 
-export const fetchPostTodos = (title:string) => {
+export const fetchPostTodos = (mass:any) => {
     return function (dispatch: any) {
         let cookie_data = {csrf_token: Cookies.get('csrftoken')}
         const requestOptions = {
@@ -26,7 +26,8 @@ export const fetchPostTodos = (title:string) => {
 
             },
             body: JSON.stringify({
-              title: title,
+              title: mass['title'],
+              description: mass['description'],
               // comment: 'test comment',
             }),
         };
