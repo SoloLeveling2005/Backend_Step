@@ -13,7 +13,7 @@ from django_api import models
 
 class ToDosSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.ToDo
+        model = models.Posts
         fields = "__all__"  # ['id', 'title']
         # fields = ['id']
 

@@ -13,7 +13,7 @@ export const reducer = (state = defaultState, action:any) => {
         case newTodo:
             let now = new Date().getTime();
             // @ts-ignore
-            state.todos.push({id: now, title: action.payload})
+            state.todos.push({id: now, title: action.payload[0], description:action.payload[1]})
 
             // @ts-ignore
             return {...state, todos: state.todos}

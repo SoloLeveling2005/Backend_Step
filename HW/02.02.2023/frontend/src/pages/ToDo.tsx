@@ -4,12 +4,17 @@ import {useDispatch, useSelector} from "react-redux";
 // import axios from "axios";
 import {fetchDeleteTodos, fetchGetTodos, fetchPostTodos} from "../asyncAction/customers";
 import {useCookies} from 'react-cookie';
+import {Link} from "react-router-dom";
 
 function ToDo() {
     let [cookies, setCookie, removeCookie] = useCookies(['csrftoken']);
 
     const [title_, changeTitle_] = React.useState("");
     const [description_, changeDescription_] = React.useState("");
+
+    const [editingTitle_, changeEditingTitle_] = React.useState("");
+    const [editingDescription_, changeEditingDescription_] = React.useState("");
+    const [editingId_, changeEditingId_] = React.useState("");
 
     const dispatch = useDispatch()
 
@@ -24,14 +29,25 @@ function ToDo() {
        changeDescription_(event.target.value);
     };
 
+    const changeEditingId = (event:any) => {
+        changeEditingId_(event.target.id)
+        console.log(event.target.id)
+    }
+    const changeEditingTitle = (event:any) => {
+        changeEditingTitle_(event.target.value)
+    }
+    const changeEditingDescription = (event:any) => {
+        changeEditingDescription_(event.target.value)
+    }
+
     const newTodo = () => {
         if (!title_) return
-        dispatch({type:'newTodo', payload:{'title':title_,'description':description_}})
+        dispatch({type:'newTodo', payload:[title_,description_]})
         // @ts-ignore
-        dispatch(fetchPostTodos({'title':title_,'description':description_}))
+        dispatch(fetchPostTodos([title_,description_]))
         changeTitle_("");
+        changeDescription_("");
         // @ts-ignore
-
     }
 
     const deleteTodo = (id_:string) => {
@@ -49,6 +65,12 @@ function ToDo() {
 
     return (
         <div className="App" >
+            <header className="header d-flex justify-content-center py-3">
+                <ul className="nav nav-pills">
+                    <Link to={`/`}><a href="#" className="nav-link " aria-current="page">Home</a></Link>
+                    <li className="nav-item"><a href="#" className="nav-link active">ToDo</a></li>
+                </ul>
+            </header>
             <form>
                 <div className="mb-3">
                     <label htmlFor="exampleInputTitle" className="form-label">Введите название задачи</label>
@@ -64,22 +86,22 @@ function ToDo() {
                            aria-describedby="emailHelp"
                            onChange={changeDescriptionNewTodo}
                            value={description_}/>
-                    {title_}
-                    {description_}
                 </div>
                 <button type="button" className="btn btn-primary w-100" onClick={() => newTodo()}>Создать</button>
             </form>
             {todos.map((todo: any) =>
-                <div key={todo.id} className={'card'}>
-                    <span>{todo.title}</span>
-                    <span>{todo.description}</span>
-                    {todo.id}
+                <div key={todo.id} id={todo.id} className={'card'} onClick={(event) => changeEditingId(event)}>
+                    <input type="text" className={'changeInfo'} value={todo.title} onChange={changeEditingTitle}/>
+                    <input type="text" className={'changeInfo'} value={todo.description} onChange={changeEditingDescription}/>
+                    {editingDescription_}
                     <button
                         type="button"
                         className="btn-close"
                         aria-label="Close"
                         onClick={() => deleteTodo(todo.id)}></button>
+
                 </div>
+
             )}
         </div>
 

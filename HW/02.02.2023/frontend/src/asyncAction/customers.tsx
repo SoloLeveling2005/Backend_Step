@@ -4,7 +4,7 @@ import Cookies from 'js-cookie';
 
 export const fetchGetTodos = () => {
     return function (dispatch: any) {
-        fetch('http://127.0.0.1:8000/apii/api/')
+        fetch('http://127.0.0.1:8000/apii/posts/')
             .then(response => response.json())
             .then(json => {
                 dispatch(CreateFetchTodo(json))
@@ -26,14 +26,14 @@ export const fetchPostTodos = (mass:any) => {
 
             },
             body: JSON.stringify({
-              title: mass['title'],
-              description: mass['description'],
+              title: mass[0],
+              description: mass[1],
               // comment: 'test comment',
             }),
         };
         console.log(cookie_data)
         // @ts-ignore
-        fetch('http://127.0.0.1:8000/apii/api/', requestOptions)
+        fetch('http://127.0.0.1:8000/apii/posts/', requestOptions)
             .then(data => {
                 // @ts-ignore
                 const response = data.json()
@@ -61,7 +61,7 @@ export const fetchDeleteTodos = (id:string) => {
             }),
         };
         // @ts-ignore
-        fetch('http://127.0.0.1:8000/apii/api/', requestOptions)
+        fetch('http://127.0.0.1:8000/apii/posts/', requestOptions)
             .then(data => {
                 const response = data.json()
                 console.log(response)

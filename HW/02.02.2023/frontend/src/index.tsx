@@ -15,9 +15,11 @@ const root = createRoot(container);
 
 root.render(
     <CookiesProvider>
+
         <Provider store={store}>
             <BrowserRouter>
                 <Routes>
+
                     <Route path="/" element={<HomePage />}></Route>
                     <Route path="/todo" element={<ToDo />}></Route>
                     {/*<Route path="/register" element={<RegisterPage />}></Route>*/}

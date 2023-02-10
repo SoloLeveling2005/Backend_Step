@@ -64,12 +64,19 @@ def index(request):
 #     data = models.ToDo.objects.create(title=title)
 #     return Response(data=data, status=status.HTTP_200_OK)
 
+
+# {
+# "title":"title",
+# "description":"description"
+# }
+
 @api_view(http_method_names=["POST", "GET", "DELETE", "PUT", "PATCH"])
 @permission_classes((permissions.AllowAny,))
 def posts(request):
     if request.method == "GET":
         data = models.Posts.objects.all()
         data_json = django_serializers.ToDosSerializer(instance=data, many=True).data
+        print(data_json)
         return Response(data=data_json, status=status.HTTP_200_OK)
 
     elif request.method == "POST":

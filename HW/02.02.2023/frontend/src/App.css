@@ -1,6 +1,10 @@
 body {
   /*background-color: #e3e3e3;*/
 }
+.card input {
+  border:0;
+
+}
 .App {
   margin: auto;
   width: 100%;
