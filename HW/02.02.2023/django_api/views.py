@@ -109,5 +109,17 @@ def posts(request):
             return Response(data=str(e), status=status.HTTP_204_NO_CONTENT)
 
     elif request.method == "PUT" or request.method == "PATCH":
+        id = request.data['id']
         title = request.data['title']
         description = request.data['description']
+        print(id)
+        print(title)
+        print(description)
+        data = models.Posts.objects.get(id=id)
+        data.title = title
+        data.description = description
+        data.save()
+
+        data = models.Posts.objects.all()
+        data_json = django_serializers.ToDosSerializer(instance=data, many=True).data
+        return Response(data=data_json, status=status.HTTP_200_OK)

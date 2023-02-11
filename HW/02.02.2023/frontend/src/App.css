@@ -54,3 +54,49 @@ form {
 .form-new-title {
   margin-bottom: 5px;
 }
+
+.change-button {
+  margin-right: 10px;
+}
+.info-post {
+  pointer-events: none;
+}
+.btn-close {
+  pointer-events: all;
+}
+
+
+
+
+/* Блок изменения контента */
+.block-changes {
+  width: 100vw;
+  height: 100vh;
+  position: absolute;
+  top:0;
+  left:0;
+  z-index: 90;
+}
+.block-changes .in {
+  width: 500px;
+  height: 150px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  flex-direction: column;
+  background-color: #fff;
+  padding: 10px;
+  position: absolute;
+  z-index: 100;
+  left: calc(50vw - 260px);
+  top: calc(50vh - 85px);
+  border: 0;
+  border-radius: 10px;
+  box-shadow: 0px 0px 3px 2px rgb(0 0 0 / 10%);
+}
+.block-changes input {
+  margin: 3px 0;
+}
+.block-changes button {
+  margin: 5px 0;
+}
