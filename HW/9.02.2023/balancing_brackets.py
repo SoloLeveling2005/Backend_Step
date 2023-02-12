@@ -81,7 +81,9 @@ def balanced(data):
                     symbols = symbols[:-1]
 
     if not error:
-        print("Ошибок не обнаружено")
+        return "Ошибок не обнаружено"
+    else:
+        return "Ошибка"
 
 
-balanced(str1)
+print(balanced(str1))
