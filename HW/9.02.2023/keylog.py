@@ -38,8 +38,7 @@ def start():
     with Listener(on_press=controller) as l:
         l.join()
 
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     print("Hello from main Process")
     proc1 = Process(target=start)
     proc1.start()
