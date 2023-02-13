@@ -86,4 +86,3 @@ def balanced(data):
         return "Ошибка"
 
 
-print(balanced(str1))
