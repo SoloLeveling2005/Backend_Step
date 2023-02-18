@@ -22,7 +22,6 @@ def sort1(array):
 
 # sort1(mass)
 # Второй способ (выборка)
-print("\n\n\n")
 
 
 def sort2(array):
