@@ -1,33 +1,45 @@
+# import libraries
 import cv2
+import face_recognition
 
-# Загрузка каскадного классификатора для распознавания лиц
-face_cascade = cv2.CascadeClassifier('haarcascade_frontalface_default.xml')
+# Get a reference to webcam
+video_capture = cv2.VideoCapture("/dev/video1")
 
-# Загрузка видеофайла
-cap = cv2.VideoCapture('video.mp4')
+# Initialize variables
+face_locations = []
 
-# Чтение кадров из видео и обработка их
 while True:
-    # Захват кадра из видео
-    ret, frame = cap.read()
 
-    # Преобразование кадра в оттенки серого для улучшения скорости обработки
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+# Grab a single frame of video
 
-    # Поиск лиц на кадре
-    faces = face_cascade.detectMultiScale(gray, 1.3, 5)
+ret, frame = video_capture.read()
 
-    # Отрисовка прямоугольника вокруг обнаруженных лиц
-    for (x, y, w, h) in faces:
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2)
+# Convert the image from BGR color (which OpenCV uses) to RGB color (which face_recognition uses)
 
-    # Отображение результата
-    cv2.imshow('frame', frame)
+rgb_frame = frame[:, :, ::-1]
 
-    # Выход из цикла, если нажата клавиша 'q'
-    if cv2.waitKey(1) & 0xFF == ord('q'):
-        break
+# Find all the faces in the current frame of video
 
-# Освобождение ресурсов
-cap.release()
+face_locations = face_recognition.face_locations(rgb_frame)
+
+# Display the results
+
+for top, right, bottom, left in face_locations:
+
+# Draw a box around the face
+
+cv2.rectangle(frame, (left, top), (right, bottom), (0, 0, 255), 2)
+
+# Display the resulting image
+
+cv2.imshow('Video', frame)
+
+# Hit 'q' on the keyboard to quit!
+
+if cv2.waitKey(1) & 0xFF == ord('q'):
+
+break
+
+# Release handle to the webcam
+video_capture.release()
 cv2.destroyAllWindows()
