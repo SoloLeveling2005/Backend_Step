@@ -55,7 +55,7 @@ def index(request):
                             model.count = count
                             model.save()
                         transaction.on_commit(lambda: print("Удачно"))
-                        
+
                 elif 'update_price' in request.POST:
                     price = request.POST['product_price']
                     with transaction.atomic():
