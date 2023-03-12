@@ -1,18 +1,111 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en" class="w-100 h-100">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="./css/bootstrap.css">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <style>
-        body {
-            background: -webkit-linear-gradient(90deg, #182021,#293637,#233031,#212c2e);
-            background: linear-gradient(90deg, #182021,#212a2a,#233031,#212c2e);                                         
+        * {
+            font-family: 'Ubuntu', sans-serif;
         }
+        /*body {*/
+        /*    background: -webkit-linear-gradient(90deg, #182021,#293637,#233031,#212c2e);*/
+        /*    background: linear-gradient(90deg, #182021,#212a2a,#233031,#212c2e);                                         */
+        /*}*/
     </style>
 </head>
 <body class="w-100 h-100">
-    Hello
-    <script src="./js/bootstrap.js"></script>
+<div class="container">
+    <form action="{% url 'new_post' %}" class="p-2 w-100 " method="POST">
+        {% csrf_token %}
+        <input type="text" name="title" placeholder="Введите заголовок" class="w-100 p-2 me-2 mb-1">
+        <input type="text" name="description" placeholder="Введите описание" class="w-100 p-2 me-2 mb-1">
+        <input type="submit" value="Запостить" class="btn btn-success w-100">
+    </form>
+
+    <div class="cards m-2">
+        {%for i in data%}
+
+
+        <div class="card w-100 mb-2 " style="width: 18rem;" id="card" data-comments="{{i.id}}">
+          <div class="card-body">
+            <h5 class="card-title">{{i.title}}</h5>
+            <p class="card-text">{{i.description}}</p>
+            <div class="d-flex align-items-center">
+                {{i.get_likes|length}}
+                <form action="{% url 'post_like' %}" class="w-100 p-0 m-0 d-flex " method="POST">
+                    {% csrf_token %}
+                    <input type="hidden" value="{{i.id}}" name="post_id">
+
+                    <input type="submit" value="&#10084;" class="text-danger border-0 bg-white fs-3" style="" name="like">
+                </form>
+                <button id="new_comment" class="border-0 bg-white my-button d-flex align-items-center" data-id="{{i.id}}"><p class="p-0 m-0">{{i.get_comments|length}}</p><p class="p-0 m-0">&#9997;</p></button>
+                <div class="block_comment position-relative">
+                    <form action="{% url 'post_comment' %}" method="POST" id="comment_{{i.id}}" class="position-absolute" style="display:none; right: 0; top: 20px; z-index: 100; width: 300px;">
+                        {% csrf_token %}
+                        <input type="hidden" value="{{i.id}}" name="post_id">
+                        <input type="text" name="text" class="w-100 mb-2" placeholder="Введите текст комментария">
+                        <input type="submit" class="w-100 btn btn-primary">
+                    </form>
+                </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-100">
+            <div id="comments_{{i.id}}" style="display: none;">
+                {% for comment in i.get_comments%}
+                <div class="card w-auto mb-2 ms-5" style="width: 18rem;" id="">
+                  <div class="card-body ">
+                    <h6 class="card-title p-0 m-0">{{comment.text}}</h6>
+                  </div>
+                </div>
+                {%endfor%}
+            </div>
+
+        </div>
+
+        {%endfor%}
+    </div>
+</div>
+    <script src="{% static 'js/bootstrap.js' %}"></script>
+    <script>
+        var child = document.querySelector('#new_comment');
+
+        child.addEventListener('click', function(event) {
+          event.stopPropagation(); // предотвращаем передачу события родительскому блоку
+        });
+        
+
+        var buttons = document.querySelectorAll('.my-button');
+        buttons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                let id = button.getAttribute('data-id');
+                let form = document.querySelector(`#comment_${id}`);
+                if (form.style.display === 'none') {
+                  form.style.display = 'block';
+                } else {
+                  form.style.display = 'none';
+                }
+            });
+        });
+
+
+        var blocks = document.querySelectorAll('#card');
+        blocks.forEach(function(blocks) {
+            blocks.addEventListener('click', function() {
+                let id = blocks.getAttribute('data-comments');
+                let form = document.querySelector(`#comments_${id}`);
+                if (form.style.display === 'none') {
+                  form.style.display = 'block';
+                } else {
+                  form.style.display = 'none';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
