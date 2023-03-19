@@ -20,7 +20,7 @@ def index(request):
         token = time.time() + random.randint(100, 999)
 
         if models.User.objects.filter(username=username).exists():
-            return render(request, 'index.html', context={'error': 'Такой пользователь уже существует'})
+            return render(request, 'index.html', context={'error': 'Такой пользователь уже существует', 'user': ""})
         else:
             models.User.objects.create(username=username, password=make_password(password), token=token)
 
@@ -49,6 +49,7 @@ def index(request):
 def new_post(request):
     title = request.POST['title']
     description = request.POST['description']
+    user_id = request.POST['user_id']
     models.Post.objects.create(title=title, description=description)
 
     return HttpResponseRedirect(reverse('index'))
@@ -56,7 +57,8 @@ def new_post(request):
 
 def post_like(request):
     post_id = request.POST['post_id']
-    post = models.Post.objects.get(id=post_id)
+    user_id = request.POST['user_id']
+    post = models.Post.objects.get(id=post_id, user_id=user_id)
     models.Like.objects.create(post_id=post)
     return HttpResponseRedirect(reverse('index'))
 
@@ -64,6 +66,13 @@ def post_like(request):
 def post_comment(request):
     post_id = request.POST['post_id']
     text = request.POST['text']
-    post = models.Post.objects.get(id=post_id)
-    models.Comment.objects.create(text=text, post_id=post)
+    user_id = request.POST['user_id']
+
+    # todo Проверка на владение/существование поста
+    try:
+        post = models.Post.objects.get(id=post_id, user_id=user_id)
+        models.Comment.objects.create(text=text, post_id=post)
+    except Exception as e:
+        print(e)
+
     return HttpResponseRedirect(reverse('index'))

@@ -1,4 +1,5 @@
 {% load static %}
+{% load user_id %}
 <!DOCTYPE html>
 <html lang="en" class="w-100 h-100">
 <head>
@@ -21,11 +22,11 @@
 <body class="w-100 h-100">
 
 
-
 {% if user %}
 <div class="container">
     <form action="{% url 'new_post' %}" class="p-2 w-100 " method="POST">
         {% csrf_token %}
+        {% user_id _id=user.id %}
         <input type="text" name="title" placeholder="Введите заголовок" class="w-100 p-2 me-2 mb-1">
         <input type="text" name="description" placeholder="Введите описание" class="w-100 p-2 me-2 mb-1">
         <input type="submit" value="Запостить" class="btn btn-success w-100">
@@ -43,14 +44,17 @@
                 {{i.get_likes|length}}
                 <form action="{% url 'post_like' %}" class="w-100 p-0 m-0 d-flex " method="POST">
                     {% csrf_token %}
-                    <input type="hidden" value="{{i.id}}" name="post_id">
+                    {% user_id _id=user.id %}
 
+                    <input type="hidden" value="{{i.id}}" name="post_id">
                     <input type="submit" value="&#10084;" class="text-danger border-0 bg-white fs-3" style="" name="like">
                 </form>
                 <button id="new_comment" class="border-0 bg-white my-button d-flex align-items-center" data-id="{{i.id}}"><p class="p-0 m-0">{{i.get_comments|length}}</p><p class="p-0 m-0">&#9997;</p></button>
                 <div class="block_comment position-relative">
                     <form action="{% url 'post_comment' %}" method="POST" id="comment_{{i.id}}" class="position-absolute" style="display:none; right: 0; top: 20px; z-index: 100; width: 300px;">
                         {% csrf_token %}
+                        {% user_id _id=user.id %}
+
                         <input type="hidden" value="{{i.id}}" name="post_id">
                         <input type="text" name="text" class="w-100 mb-2" placeholder="Введите текст комментария">
                         <input type="submit" class="w-100 btn btn-primary">
@@ -80,7 +84,7 @@
     {% if error %}
         {{error}}
     {% endif %}
-    <form action="" method="POSt" class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
+    <form action="" method="POST" class="w-100 h-100 d-flex flex-column align-items-center justify-content-center">
         {% csrf_token %}
         <label>
             <input type="text" name="username" class="w-100 p-2 m-2" placeholder="username">
