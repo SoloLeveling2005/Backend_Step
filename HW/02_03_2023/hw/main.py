@@ -24,5 +24,15 @@ evening(s_=s, p_=p, m_=m)
 
 
 # todo task 7
-
-
+#
+#
+# a, b, c, d, e, f, g, h = 1, 2, 3, 4, 5, 6, 7, 8
+#
+# horse = [f, 1]
+#
+#
+# def where_can_i_go(position):
+#     # todo максимально возможные варианты 8
+#
+#     top_right, top_left, left_top, left_bottom, bottom_left, bottom_right, right_bottom, right_top = \
+#         [position[0]+1, position[1]+2], [position[0]-1, position[1]+2], [position[0]-2, position[1]+2]
