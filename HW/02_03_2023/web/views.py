@@ -14,6 +14,7 @@ from web import models
 
 def index(request):
     token = request.COOKIES.get('token')
+    data = models.Post.objects.all()
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -26,11 +27,10 @@ def index(request):
 
         user = models.User.objects.get(token=token)
 
-        rendered_view = render(request, 'index.html', context={'user': user})
+        rendered_view = render(request, 'index.html', context={'data': data, 'user': user})
         rendered_view.set_cookie('token', token)
         return rendered_view
     else:
-        print(models.User.objects.filter(token=token).exists())
         try:
             user = models.User.objects.get(token=token) if models.User.objects.filter(token=token).exists() else ""
         except Exception as e:
@@ -41,25 +41,41 @@ def index(request):
             rendered_view = render(request, 'index.html', context={'user': user})
             return rendered_view
 
-        data = models.Post.objects.all()
+
         rendered_view = render(request, 'index.html', context={'data': data, 'user': user})
         return rendered_view
 
 
 def new_post(request):
-    title = request.POST['title']
-    description = request.POST['description']
-    user_id = request.POST['user_id']
-    models.Post.objects.create(title=title, description=description)
+    if request.method == 'POST':
+        title = request.POST['title']
+        description = request.POST['description']
+        user_id = request.POST['user_id']
+        user = models.User.objects.get(id=user_id)
+
+        models.Post.objects.create(title=title, description=description, user=user)
 
     return HttpResponseRedirect(reverse('index'))
 
 
 def post_like(request):
-    post_id = request.POST['post_id']
-    user_id = request.POST['user_id']
-    post = models.Post.objects.get(id=post_id, user_id=user_id)
-    models.Like.objects.create(post_id=post)
+    if request.method == 'POST':
+        post_id = request.POST['post_id']
+        user_id = request.POST['user_id']
+        user = models.User.objects.get(id=user_id)
+
+        try:
+            post = models.Post.objects.get(id=post_id)
+
+            try:
+                like = models.Like.objects.get(post=post, user=user)
+                like.delete()
+            except Exception as e:
+                print(e)
+                models.Like.objects.create(post=post, user=user)
+        except Exception as e:
+            print(e)
+
     return HttpResponseRedirect(reverse('index'))
 
 
@@ -67,11 +83,11 @@ def post_comment(request):
     post_id = request.POST['post_id']
     text = request.POST['text']
     user_id = request.POST['user_id']
+    user = models.User.objects.get(id=user_id)
 
-    # todo Проверка на владение/существование поста
     try:
-        post = models.Post.objects.get(id=post_id, user_id=user_id)
-        models.Comment.objects.create(text=text, post_id=post)
+        post = models.Post.objects.get(id=post_id)
+        models.Comment.objects.create(text=text, post=post, user=user)
     except Exception as e:
         print(e)
 

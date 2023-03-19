@@ -9,24 +9,25 @@ class User(models.Model):
 
 
 class Post(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=300)
     likes = models.BigIntegerField(default=0)
 
     # todo user_id
     def get_likes(self):
-        return Like.objects.filter(post_id=self)
+        return Like.objects.filter(post=self)
 
     def get_comments(self):
-        return Comment.objects.filter(post_id=self)
+        return Comment.objects.filter(post=self)
 
 
 class Like(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
 
 
 class Comment(models.Model):
-    user_id = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     text = models.CharField(max_length=100)
-    post_id = models.ForeignKey(Post, on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)

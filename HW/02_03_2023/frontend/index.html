@@ -47,10 +47,10 @@
                     {% user_id _id=user.id %}
 
                     <input type="hidden" value="{{i.id}}" name="post_id">
-                    <input type="submit" value="&#10084;" class="text-danger border-0 bg-white fs-3" style="" name="like">
+                    <input type="submit" value="&#10084;" class="text-danger border-0 bg-white fs-3" style="" name="like" id="post_like">
                 </form>
                 <button id="new_comment" class="border-0 bg-white my-button d-flex align-items-center" data-id="{{i.id}}"><p class="p-0 m-0">{{i.get_comments|length}}</p><p class="p-0 m-0">&#9997;</p></button>
-                <div class="block_comment position-relative">
+                <div class="block_comment position-relative" id="block_comment">
                     <form action="{% url 'post_comment' %}" method="POST" id="comment_{{i.id}}" class="position-absolute" style="display:none; right: 0; top: 20px; z-index: 100; width: 300px;">
                         {% csrf_token %}
                         {% user_id _id=user.id %}
@@ -98,9 +98,13 @@
 
 <script src="{% static 'js/bootstrap.js' %}"></script>
 <script>
-        var child = document.querySelector('#new_comment');
-
-        child.addEventListener('click', function(event) {
+        document.querySelector('#new_comment').addEventListener('click', function(event) {
+          event.stopPropagation(); // предотвращаем передачу события родительскому блоку
+        });
+        document.querySelector('#block_comment').addEventListener('click', function(event) {
+          event.stopPropagation(); // предотвращаем передачу события родительскому блоку
+        });
+        document.querySelector('#post_like').addEventListener('click', function(event) {
           event.stopPropagation(); // предотвращаем передачу события родительскому блоку
         });
 
