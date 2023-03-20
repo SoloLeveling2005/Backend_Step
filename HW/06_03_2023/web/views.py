@@ -15,6 +15,7 @@ def index(request):
     return "Index"
 
 
+# todo Готово
 def auth(request):
     if request.method == "POST":
         username = request.POST['username']
@@ -40,14 +41,14 @@ def auth(request):
 
 
 def home(request):
-    token = request.COOKIES.get('token')
-    # todo Проверяем авторизацию пользователя
-    try:
-        user = models.User.objects.get(token)
-    except Exception as e:
-        print(e)
-        rendered_reverse = HttpResponseRedirect(reverse('auth'))
-        return rendered_reverse
+    # token = request.COOKIES.get('token')
+    # # todo Проверяем авторизацию пользователя
+    # try:
+    #     user = models.User.objects.get(token)
+    # except Exception as e:
+    #     print(e)
+    #     rendered_reverse = HttpResponseRedirect(reverse('auth'))
+    #     return rendered_reverse
 
     ads = models.Ad.objects.all()
     rendered_view = render(request, 'home.html', context={'ads': ads, 'user': user})
@@ -63,16 +64,35 @@ def user(request):
         print(e)
         rendered_reverse = HttpResponseRedirect(reverse('auth'))
         return rendered_reverse
-    
+
+
     rendered_view = render(request, 'user.html', context={'user': user})
     return rendered_view
 
 
 def ad_edit(request):
+    # token = request.COOKIES.get('token')
+    # # todo Проверяем авторизацию пользователя
+    # try:
+    #     user = models.User.objects.get(token)
+    # except Exception as e:
+    #     print(e)
+    #     rendered_reverse = HttpResponseRedirect(reverse('auth'))
+    #     return rendered_reverse
+
     rendered_view = render(request, 'ad.html', context={})
     return rendered_view
 
 
-def ad(request):
+def ad(request, ad_id):
+    # token = request.COOKIES.get('token')
+    # # todo Проверяем авторизацию пользователя
+    # try:
+    #     user = models.User.objects.get(token)
+    # except Exception as e:
+    #     print(e)
+    #     rendered_reverse = HttpResponseRedirect(reverse('auth'))
+    #     return rendered_reverse
+
     rendered_view = render(request, 'ad.html', context={})
     return rendered_view

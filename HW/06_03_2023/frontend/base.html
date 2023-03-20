@@ -10,6 +10,19 @@
     <title>{% block title %}{% endblock %}</title>
 </head>
 <body class="w-100 h-100">
-  {% block body %}{% endblock %}
+<div class="w-100 bg-dark py-2">
+    <div class="container d-flex align-items-center justify-content-between">
+        <h2 class="text-white">User1</h2>
+        <form action="">
+            <input type="submit" class="btn text-white" value="Log out">
+        </form>
+    </div>
+</div>
+<div class="w-100 h-auto bg-secondary">
+    {% block body %}{% endblock %}
+</div>
+
+<script src="{% static 'js/bootstrap.js' %}"></script>
+<script src="{% static 'js/bootstrap.bundle.js' %}"></script>
 </body>
 </html>

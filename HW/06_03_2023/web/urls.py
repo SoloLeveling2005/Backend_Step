@@ -19,6 +19,6 @@ urlpatterns = [
     path("user/<str:user_id>/ad/<str:ad_id>", views.ad_edit, name="ad_edit"),
 
     # todo GET - return template one ad
-    path("ad/<str:ad>", views.ad, name="ad"),
+    path("ad/<str:ad_id>", views.ad, name="ad"),
 
 ] + static(settings.STATIC_URL, document_root=settings.MEDIA_ROOT)
