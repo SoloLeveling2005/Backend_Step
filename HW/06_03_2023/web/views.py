@@ -41,21 +41,21 @@ def auth(request):
 
 
 def home(request):
-    # token = request.COOKIES.get('token')
-    # # todo Проверяем авторизацию пользователя
-    # try:
-    #     user = models.User.objects.get(token)
-    # except Exception as e:
-    #     print(e)
-    #     rendered_reverse = HttpResponseRedirect(reverse('auth'))
-    #     return rendered_reverse
+    token = request.COOKIES.get('token')
+    # todo Проверяем авторизацию пользователя
+    try:
+        user = models.User.objects.get(token)
+    except Exception as e:
+        print(e)
+        rendered_reverse = HttpResponseRedirect(reverse('auth'))
+        return rendered_reverse
 
     ads = models.Ad.objects.all()
     rendered_view = render(request, 'home.html', context={'ads': ads, 'user': user})
     return rendered_view
 
 
-def user(request):
+def user(request, user_id):
     token = request.COOKIES.get('token')
     # todo Проверяем авторизацию пользователя
     try:
@@ -70,29 +70,29 @@ def user(request):
     return rendered_view
 
 
-def ad_edit(request):
-    # token = request.COOKIES.get('token')
-    # # todo Проверяем авторизацию пользователя
-    # try:
-    #     user = models.User.objects.get(token)
-    # except Exception as e:
-    #     print(e)
-    #     rendered_reverse = HttpResponseRedirect(reverse('auth'))
-    #     return rendered_reverse
+def ad_edit(request, user_id, ad_id):
+    token = request.COOKIES.get('token')
+    # todo Проверяем авторизацию пользователя
+    try:
+        user = models.User.objects.get(token)
+    except Exception as e:
+        print(e)
+        rendered_reverse = HttpResponseRedirect(reverse('auth'))
+        return rendered_reverse
 
-    rendered_view = render(request, 'ad.html', context={})
+    rendered_view = render(request, 'new_ad.html', context={})
     return rendered_view
 
 
 def ad(request, ad_id):
-    # token = request.COOKIES.get('token')
-    # # todo Проверяем авторизацию пользователя
-    # try:
-    #     user = models.User.objects.get(token)
-    # except Exception as e:
-    #     print(e)
-    #     rendered_reverse = HttpResponseRedirect(reverse('auth'))
-    #     return rendered_reverse
+    token = request.COOKIES.get('token')
+    # todo Проверяем авторизацию пользователя
+    try:
+        user = models.User.objects.get(token)
+    except Exception as e:
+        print(e)
+        rendered_reverse = HttpResponseRedirect(reverse('auth'))
+        return rendered_reverse
 
     rendered_view = render(request, 'ad.html', context={})
     return rendered_view

@@ -8,17 +8,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <title>{% block title %}{% endblock %}</title>
+    <style>
+        * {
+            font-family: 'Ubuntu', sans-serif;
+
+        }
+    </style>
 </head>
 <body class="w-100 h-100">
 <div class="w-100 bg-dark py-2">
     <div class="container d-flex align-items-center justify-content-between">
-        <h2 class="text-white">User1</h2>
+        <a class="text-white fs-2 text-decoration-none" href="{% url 'home' %}">User1</a>
         <form action="">
             <input type="submit" class="btn text-white" value="Log out">
         </form>
     </div>
 </div>
-<div class="w-100 h-auto bg-secondary">
+<div class="w-100 h-auto bg-secondary" style="min-height: 100vh;">
     {% block body %}{% endblock %}
 </div>
 
