@@ -65,8 +65,13 @@ def user(request, user_id):
         rendered_reverse = HttpResponseRedirect(reverse('auth'))
         return rendered_reverse
 
+    # author = models.User.objects.get(token=user_id)
 
-    rendered_view = render(request, 'user.html', context={'user': user})
+    rendered_view = render(request, 'user.html', context={
+        'user': user,
+        # 'author': author,
+        # 'get_user_ads': author.get_user_ads
+    })
     return rendered_view
 
 
@@ -80,11 +85,27 @@ def ad_edit(request, user_id, ad_id):
         rendered_reverse = HttpResponseRedirect(reverse('auth'))
         return rendered_reverse
 
-    new_ad = models.Ad.objects.create(
-        
-    )
+    message = ''
+    if request.method == "POST":
+        try:
+            title = request.POST['title']
+            description = request.POST['description']
+            img = request.POST['img']
+            price = request.POST['price']
 
-    rendered_view = render(request, 'new_ad.html', context={})
+            new_ad = models.Ad.objects.create(
+                author=user,
+                title=title,
+                description=description,
+                price=price,
+                img_url=img
+            )
+            message = 'Объявление добавлено!'
+        except Exception as e:
+            print(e)
+            message = 'Не все поля заполнены'
+
+    rendered_view = render(request, 'new_ad.html', context={'message': message})
     return rendered_view
 
 

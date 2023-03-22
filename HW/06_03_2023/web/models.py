@@ -9,6 +9,9 @@ class User(models.Model):
     password = models.CharField(max_length=100)
     token = models.CharField(max_length=100)
 
+    def get_user_ads(self):
+        return Ad.objects.filter(author=self)
+
 
 class Ad(models.Model):
     author = models.ForeignKey(User, on_delete=models.CASCADE)

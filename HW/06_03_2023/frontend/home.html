@@ -5,12 +5,12 @@
 
 
 <div class="container py-3 d-flex flex-wrap">
-    {% for i in "1234567" %}
-    <a class="card m-1 text-decoration-none text-dark" style="width: 32%;" href="{% url 'ad' ad_id=i %}">
-      <img src="{% static 'img/img.jpg' %}" class="card-img-top" alt="...">
+    {% for ad_ in ads %}
+    <a class="card m-1 text-decoration-none text-dark" style="width: 32%;" href="{% url 'ad' ad_id=1 %}">
+      <img src="{% static ad_.img_url %}" class="card-img-top" alt="...">
       <div class="card-body">
-        <h5 class="card-title">Card title {{i}}</h5>
-        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+        <h5 class="card-title">{{ad_.title}}</h5>
+        <p class="card-text">{{ad_.description}}</p>
       </div>
     </a>
     {% endfor %}

@@ -10,7 +10,7 @@
 
     <div class="mb-2">
       <label for="formFile" class="form-label fw-bold">Выберите картинку</label>
-      <input class="form-control" type="file" id="formFile">
+      <input class="form-control" type="file" id="formFile" name="img">
     </div>
 
     <label for="title_input_form" class=" fw-bold">Введите наименование</label><br>
@@ -24,7 +24,7 @@
 
     <input type="submit" value="Добавить" class="btn btn-primary w-100 py-2">
   </form>
-
+{{message}}
 </div>
 
 {% endblock %}
