@@ -18,4 +18,4 @@ class Ad(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     price = models.IntegerField()
-    img_url = models.ImageField(upload_to='ad_images/', null=True)
+    img_url = models.ImageField(upload_to='img/', null=True)

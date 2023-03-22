@@ -7,6 +7,12 @@ from django.urls import reverse
 
 from web import models
 
+from django import forms
+
+class New_ad_form(forms.ModelForm):
+    class Meta:
+        model = models.Ad
+        fields = ['title', 'description', 'price', 'img_url']
 
 # Create your views here.
 
@@ -86,26 +92,28 @@ def ad_edit(request, user_id, ad_id):
         return rendered_reverse
 
     message = ''
+    form = New_ad_form()
     if request.method == "POST":
         try:
-            title = request.POST['title']
-            description = request.POST['description']
-            img = request.POST['img']
-            price = request.POST['price']
+            # title = request.POST['title']
+            # description = request.POST['description']
+            # price = request.POST['price']
 
-            new_ad = models.Ad.objects.create(
-                author=user,
-                title=title,
-                description=description,
-                price=price,
-                img_url=img
-            )
+            form = New_ad_form(request.POST, request.FILES, initial={'author': user})
+
+            instance = form.save(commit=False)
+            instance.save()
+            if form.is_valid():
+                form.save()
+                img_obj = form.instance
+
             message = 'Объявление добавлено!'
+
         except Exception as e:
             print(e)
             message = 'Не все поля заполнены'
 
-    rendered_view = render(request, 'new_ad.html', context={'message': message})
+    rendered_view = render(request, 'new_ad.html', context={'message': message, 'form': form})
     return rendered_view
 
 

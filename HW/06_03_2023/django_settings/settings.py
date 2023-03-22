@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -123,8 +123,8 @@ STATICFILES_DIRS = [
     Path(BASE_DIR / 'frontend/static'),
 ]
 STATIC_ROOT = 'static/'
-MEDIA_URL = 'media/'
-MEDIA_ROOT = Path(BASE_DIR / 'frontend/static')
+MEDIA_URL = '/img/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'frontend/static/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
