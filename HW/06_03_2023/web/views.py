@@ -44,7 +44,7 @@ def home(request):
     token = request.COOKIES.get('token')
     # todo Проверяем авторизацию пользователя
     try:
-        user = models.User.objects.get(token)
+        user = models.User.objects.get(token=token)
     except Exception as e:
         print(e)
         rendered_reverse = HttpResponseRedirect(reverse('auth'))
@@ -59,7 +59,7 @@ def user(request, user_id):
     token = request.COOKIES.get('token')
     # todo Проверяем авторизацию пользователя
     try:
-        user = models.User.objects.get(token)
+        user = models.User.objects.get(token=token)
     except Exception as e:
         print(e)
         rendered_reverse = HttpResponseRedirect(reverse('auth'))
@@ -74,11 +74,15 @@ def ad_edit(request, user_id, ad_id):
     token = request.COOKIES.get('token')
     # todo Проверяем авторизацию пользователя
     try:
-        user = models.User.objects.get(token)
+        user = models.User.objects.get(token=token)
     except Exception as e:
         print(e)
         rendered_reverse = HttpResponseRedirect(reverse('auth'))
         return rendered_reverse
+
+    new_ad = models.Ad.objects.create(
+        
+    )
 
     rendered_view = render(request, 'new_ad.html', context={})
     return rendered_view
@@ -88,7 +92,7 @@ def ad(request, ad_id):
     token = request.COOKIES.get('token')
     # todo Проверяем авторизацию пользователя
     try:
-        user = models.User.objects.get(token)
+        user = models.User.objects.get(token=token)
     except Exception as e:
         print(e)
         rendered_reverse = HttpResponseRedirect(reverse('auth'))
