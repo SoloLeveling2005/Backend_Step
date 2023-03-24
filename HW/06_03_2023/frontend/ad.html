@@ -6,13 +6,16 @@
 <div class="container py-3 d-flex flex-wrap text-white h-100">
     <div class="row">
         <div class="col">
-            <img src="{% static 'img/img.jpg' %}" alt="" class="w-100 h-auto">
+            <img src="{% static ad.img_url %}" alt="" class="w-100 h-auto">
         </div>
         <div class="col">
-            <p class="fs-3 my-1 fw-bold">Владелец: <a class="fw-normal text-white" href="{% url 'user' user_id=1 %}">Владелец 1</a></p>
-            <p class="fs-3 my-1 fw-bold">Название: <span class="fw-normal">Название 1</span></p>
-            <p class="fs-4 my-1 fw-bold ">Описание: <span class="fw-normal">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</span></p>
-            <p class="fs-3 my-1 fw-bold">Цена: <span class="">5000 т</span></p>
+            <p class="fs-3 my-1 fw-bold">Владелец: <a class="fw-normal text-white" href="{% url 'user' user_id=ad.author.id %}">{{ ad.author.username }}</a></p>
+            <p class="fs-3 my-1 fw-bold">Название: <span class="fw-normal">{{ ad.title }}</span></p>
+            <p class="fs-4 my-1 fw-bold ">Описание: <span class="fw-normal">{{ ad.description }}</span></p>
+            <p class="fs-3 my-1 fw-bold">Цена: <span class="">{{ ad.price }} т</span></p>
+            {% if user.id == ad.author.id %}
+            <a href="{% url 'ad_edit' user_id=user.id ad_id=ad.id %}" class="btn btn-primary">Редактировать</a>
+            {% endif %}
         </div>
     </div>
 </div>

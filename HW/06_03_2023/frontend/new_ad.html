@@ -5,7 +5,13 @@
 {% block body %}
 
 <div class="container py-3 d-flex flex-wrap text-white h-100">
-  <form action="{% url 'ad_edit' user_id=1 ad_id=1 %}" method="POST"  enctype="multipart/form-data">
+  {% if ad.id %}
+    <form action="{% url 'ad_edit' user_id=user.id ad_id=ad.id %}" method="POST"  enctype="multipart/form-data">
+      <input type="hidden" name="method_" value="UPDATE">
+  {% else %}
+    <form action="{% url 'ad_edit' user_id=user.id ad_id=-1 %}" method="POST"  enctype="multipart/form-data">
+      <input type="hidden" name="method_" value="POST">
+  {% endif %}
     {% csrf_token %}
     {{ form.as_p }}
 <!--    <div class="mb-2">-->

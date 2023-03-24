@@ -16,14 +16,18 @@
     </style>
 </head>
 <body class="w-100 h-100">
+{% if request.COOKIES.token %}
 <div class="w-100 bg-dark py-2">
+
     <div class="container d-flex align-items-center justify-content-between">
-        <a class="text-white fs-2 text-decoration-none" href="{% url 'home' %}">User1</a>
-        <form action="">
+        <a class="text-white fs-2 text-decoration-none" href="{% url 'user' user_id=user.id %}">{{user.username}}</a>
+        <form action="{% url 'log_out' %}" method="GET">
             <input type="submit" class="btn text-white" value="Log out">
         </form>
     </div>
+
 </div>
+{% endif %}
 <div class="w-100 h-auto bg-secondary" style="min-height: 100vh;">
     {% block body %}{% endblock %}
 </div>

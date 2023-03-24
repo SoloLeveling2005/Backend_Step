@@ -19,3 +19,6 @@ class Ad(models.Model):
     description = models.TextField()
     price = models.IntegerField()
     img_url = models.ImageField(upload_to='img/', null=True)
+
+    # def author_data(self):
+    #     return User.objects.get(id=self.author.id)

@@ -7,7 +7,8 @@
     {% csrf_token %}
     <input type="text" placeholder="username" name="username" class="p-2 m-2">
     <input type="text" placeholder="password" name="password" class="p-2 m-2">
-    <input type="submit" value="Зарегистрироваться" class="btn btn-primary p-2 px-5 fs-4 m-2">
+    <input type="submit" value="Авторизоваться" class="btn btn-primary p-2 px-5 fs-4 m-2">
+    {{error}}
 </form>
 
 {% endblock %}

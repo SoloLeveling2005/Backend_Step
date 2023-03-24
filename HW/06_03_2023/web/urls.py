@@ -9,6 +9,9 @@ urlpatterns = [
     # todo GET - return template, POST - auth user
     path("", views.auth, name="auth"),
 
+    # todo GET - delete cookie
+    path('log_out/', views.log_out, name="log_out"),
+
     # todo GET - return template all ads
     path("home", views.home, name="home"),
 
