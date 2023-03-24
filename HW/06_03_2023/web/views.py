@@ -89,6 +89,25 @@ def user(request, user_id):
     return rendered_view
 
 
+def create(request):
+    try:
+        form = New_ad_form(request.POST, request.FILES, initial={'author': user})
+
+        instance = form.save(commit=False)
+        instance.author = user
+        instance.save()
+        if form.is_valid():
+            form.save()
+
+        message = 'Успешно!'
+
+    except Exception as e:
+        print(e)
+        message = 'Не все поля заполнены'
+
+    rendered_view = render(request, 'new_ad.html', context={'message': message, 'form': form, 'user': user, 'ad': ad})
+    return rendered_view
+
 def ad_edit(request, user_id, ad_id=0):
     token = request.COOKIES.get('token')
     # todo Проверяем авторизацию пользователя
@@ -115,22 +134,8 @@ def ad_edit(request, user_id, ad_id=0):
             form = New_ad_form()
 
     try:
-
         if request.POST['method'] == "POST":
-            try:
-                form = New_ad_form(request.POST, request.FILES, initial={'author': user})
 
-                instance = form.save(commit=False)
-                instance.author = user
-                instance.save()
-                if form.is_valid():
-                    form.save()
-
-                message = 'Успешно!'
-
-            except Exception as e:
-                print(e)
-                message = 'Не все поля заполнены'
 
         elif request.POST['method'] == "UPDATE":
             ad = models.Ad.objects.get(id=ad_id)
