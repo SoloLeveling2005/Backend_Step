@@ -89,26 +89,7 @@ def user(request, user_id):
     return rendered_view
 
 
-def create(request):
-    try:
-        form = New_ad_form(request.POST, request.FILES, initial={'author': user})
-
-        instance = form.save(commit=False)
-        instance.author = user
-        instance.save()
-        if form.is_valid():
-            form.save()
-
-        message = 'Успешно!'
-
-    except Exception as e:
-        print(e)
-        message = 'Не все поля заполнены'
-
-    rendered_view = render(request, 'new_ad.html', context={'message': message, 'form': form, 'user': user, 'ad': ad})
-    return rendered_view
-
-def ad_edit(request, user_id, ad_id=0):
+def ad_edit(request, ad_id:int):
     token = request.COOKIES.get('token')
     # todo Проверяем авторизацию пользователя
     try:
@@ -117,38 +98,64 @@ def ad_edit(request, user_id, ad_id=0):
         print(e)
         rendered_reverse = HttpResponseRedirect(reverse('auth'))
         return rendered_reverse
-    ad = None
     message = ''
 
-    form = New_ad_form()
-    if request.method == "GET":
-        try:
-            ad = models.Ad.objects.get(id=ad_id)
-            form = New_ad_form(initial={
-                'title': ad.title,
-                'description': ad.description,
-                'price': ad.price,
-                'img_url': ad.img_url
-            })
-        except:
-            form = New_ad_form()
+    try:
+        ad = models.Ad.objects.get(id=ad_id)
+        form = New_ad_form(initial={
+            'title': ad.title,
+            'description': ad.description,
+            'price': ad.price,
+            'img_url': ad.img_url
+        })
+    except Exception as e:
+        form = New_ad_form()
+        print(e)
+
 
     try:
-        if request.POST['method'] == "POST":
-
-
-        elif request.POST['method'] == "UPDATE":
+        if request.method == "POST":
             ad = models.Ad.objects.get(id=ad_id)
             ad.title = request.POST['title']
             ad.description = request.POST['description']
             ad.img_url = request.POST['img_url']
             ad.price = request.POST['price']
             ad.save()
-
             message = 'Успешно обновлено'
     except Exception as e:
         print(e)
-        # print(request.POST['method'])
+
+    rendered_view = render(request, 'new_ad.html', context={'message': message, 'form': form, 'user': user, 'ad': ad})
+    return rendered_view
+
+
+def ad_new(request):
+    token = request.COOKIES.get('token')
+    # todo Проверяем авторизацию пользователя
+    try:
+        user = models.User.objects.get(token=token)
+    except Exception as e:
+        print(e)
+        rendered_reverse = HttpResponseRedirect(reverse('auth'))
+        return rendered_reverse
+    message = ''
+
+    form = New_ad_form()
+    if request.method == 'POST':
+        try:
+            form = New_ad_form(request.POST, request.FILES, initial={'author': user})
+
+            instance = form.save(commit=False)
+            instance.author = user
+            instance.save()
+            if form.is_valid():
+                form.save()
+
+            message = 'Успешно!'
+
+        except Exception as e:
+            print(e)
+            message = 'Не все поля заполнены'
 
     rendered_view = render(request, 'new_ad.html', context={'message': message, 'form': form, 'user': user, 'ad': ad})
     return rendered_view

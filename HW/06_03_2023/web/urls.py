@@ -19,7 +19,10 @@ urlpatterns = [
     path("user/<str:user_id>", views.user, name="user"),
 
     # todo GET - return template one ad for edit, POST - edit this ad
-    path("user/<str:user_id>/ad/<str:ad_id>", views.ad_edit, name="ad_edit"),
+    path("ad_edit/<str:ad_id>", views.ad_edit, name="ad_edit"),
+
+    # todo GET - return template one ad form for create, POST - create this ad
+    path("ad_new", views.ad_new, name="ad_new"),
 
     # todo GET - return template one ad
     path("ad/<str:ad_id>", views.ad, name="ad"),

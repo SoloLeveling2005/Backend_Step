@@ -14,7 +14,7 @@
             <p class="fs-4 my-1 fw-bold ">Описание: <span class="fw-normal">{{ ad.description }}</span></p>
             <p class="fs-3 my-1 fw-bold">Цена: <span class="">{{ ad.price }} т</span></p>
             {% if user.id == ad.author.id %}
-            <a href="{% url 'ad_edit' user_id=user.id ad_id=ad.id %}" class="btn btn-primary">Редактировать</a>
+            <a href="{% url 'ad_edit' ad_id=ad.id %}" class="btn btn-primary">Редактировать</a>
             {% endif %}
         </div>
     </div>
