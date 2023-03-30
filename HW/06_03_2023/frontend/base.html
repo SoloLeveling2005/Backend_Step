@@ -20,10 +20,16 @@
 <div class="w-100 bg-dark py-2">
 
     <div class="container d-flex align-items-center justify-content-between">
-        <a class="text-white fs-2 text-decoration-none" href="{% url 'user' user_id=user.id %}">{{user.username}}</a>
-        <form action="{% url 'log_out' %}" method="GET">
-            <input type="submit" class="btn text-white" value="Log out">
-        </form>
+        <a class="text-white fs-2 text-decoration-none" href="{% url 'home' %}">Home</a>
+        <div class="d-flex align-items-center">
+            <a href="{% url 'user' user_id=user.id %}" class="me-4 p-0">
+                <img src="{% static 'img/user.png' %}" alt="" style="width: 25px;" class="m-0 p-0">
+            </a>
+            <form action="{% url 'log_out' %}" method="GET">
+                <input type="submit" class="btn text-white" value="Log out">
+            </form>
+        </div>
+
     </div>
 
 </div>

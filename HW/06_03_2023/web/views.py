@@ -4,7 +4,7 @@ import time
 from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from django.urls import reverse
-
+from django.http import HttpResponse
 from web import models
 
 from django import forms
@@ -90,13 +90,14 @@ def user(request, user_id):
 
 
 def ad_edit(request, ad_id:int):
-    token = request.COOKIES.get('token')
+
     # todo Проверяем авторизацию пользователя
     try:
+        token = request.COOKIES.get('token')
         user = models.User.objects.get(token=token)
     except Exception as e:
         print(e)
-        rendered_reverse = HttpResponseRedirect(reverse('auth'))
+        rendered_reverse = HttpResponse(reverse('auth'))
         return rendered_reverse
     message = ''
 
@@ -114,16 +115,28 @@ def ad_edit(request, ad_id:int):
 
 
     try:
+
         if request.method == "POST":
             ad = models.Ad.objects.get(id=ad_id)
-            ad.title = request.POST['title']
-            ad.description = request.POST['description']
-            ad.img_url = request.POST['img_url']
-            ad.price = request.POST['price']
-            ad.save()
+            if request.FILES:
+                ad.title = request.POST['title']
+                ad.description = request.POST['description']
+                # "" if request.POST['img_url'] == "" else ad.img_url =
+                ad.img_url = request.FILES['img_url']
+                ad.price = request.POST['price']
+                ad.save()
+            else:
+                ad.title = request.POST['title']
+                ad.description = request.POST['description']
+                ad.img_url = ad.img_url
+                ad.price = request.POST['price']
+                ad.save()
             message = 'Успешно обновлено'
     except Exception as e:
         print(e)
+        print(request.POST)
+        print(request.FILES)
+        message = 'Ошибка обновления'
 
     rendered_view = render(request, 'new_ad.html', context={'message': message, 'form': form, 'user': user, 'ad': ad})
     return rendered_view

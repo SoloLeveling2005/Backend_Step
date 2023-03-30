@@ -7,8 +7,10 @@
 <div class="container py-3 d-flex flex-wrap text-white h-100">
   {% if ad.id %}
     <form action="{% url 'ad_edit' ad_id=ad.id %}" method="POST"  enctype="multipart/form-data">
+      ad_edit
   {% else %}
     <form action="{% url 'ad_new' %}" method="POST"  enctype="multipart/form-data">
+      ad_new
   {% endif %}
       <input type="hidden" name="method_" value="POST">
     {% csrf_token %}
