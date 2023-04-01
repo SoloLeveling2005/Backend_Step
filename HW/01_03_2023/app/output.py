@@ -82,8 +82,8 @@ class Ui_MainWindow(object):
 
     def download_zip_file(self):
         print('download_zip_file')
-        count_ = self.spinBox_2.text()
-        response = requests.get(f'http://127.0.0.1:8000/get_urls/{count_}')
+        # count_ = self.spinBox_2.text()
+        response = requests.get(f'http://127.0.0.1:8000/get_urls/10')
         json_data = response.json()
         for img in json_data['imgs']:
             threading.Thread(target=self.download_img, args=(img, json_data['imgs'].index(img))).start()
