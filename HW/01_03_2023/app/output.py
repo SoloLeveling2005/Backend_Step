@@ -74,7 +74,7 @@ class Ui_MainWindow(object):
         response = requests.get(url)
         if response.status_code == 200:
             print(200)
-            with open(f'png{name}.png', 'wb') as f:
+            with open(f'images/png{name}.png', 'wb') as f:
                 f.write(response.content)
         else:
             print('error')
