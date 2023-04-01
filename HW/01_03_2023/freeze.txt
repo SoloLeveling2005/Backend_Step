@@ -17,10 +17,14 @@ Pillow==9.4.0
 PyQt5==5.15.9
 PyQt5-Qt5==5.15.2
 PyQt5-sip==12.11.1
+PyQt6==6.4.2
+PyQt6-Qt6==6.4.3
+PyQt6-sip==13.4.1
 pytz==2022.7.1
 requests==2.28.2
 soupsieve==2.4
 sqlparse==0.4.3
+timezones==2.2.0
 tzdata==2022.7
 urllib3==1.26.15
 yarl==1.8.2
