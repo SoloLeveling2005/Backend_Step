@@ -2,6 +2,7 @@ import asyncio
 import io
 
 import aiohttp
+from asgiref.sync import sync_to_async
 from bs4 import BeautifulSoup
 from django.http import HttpResponse, JsonResponse, FileResponse
 from django.shortcuts import render
@@ -11,22 +12,21 @@ import urllib.request
 import requests
 import zipfile
 from .models import Urls
+from django.utils import timezone
 
-def clean_db():
-    expired_objects = Urls.objects.filter(is_expired=True)
-    expired_objects.delete()
 
 def get_images_url(count_img_download):
     # смотрим есть ли достаточно ссылок фоток в бд, если есть то отправляем их иначе делаем новый запрос
+    # это глупо конечно, но ничего лучше к сожалению не придумал
     count_in_model = Urls.objects.count()
     if count_in_model >= count_img_download:
-        random_objects = Urls.objects.order_by('?')[:10]
+        random_objects = Urls.objects.order_by('?')[:count_img_download]
         return [row.url for row in random_objects]
     else:
         parse_images_url = parse_website('https://fonwall.ru/')[1:int(count_img_download) + 1]
-        [Urls.objects.create(url=i) for i in parse_images_url]
+        data = [Urls.objects.create(url=i) for i in parse_images_url]
 
-        return
+        return parse_images_url
 
 def index(request):
     return HttpResponse(render(request, 'index.html'))
@@ -52,8 +52,7 @@ async def form_request(request):
     if request.method == "POST":
         count_img_download = 20 if int(request.POST['count']) > 20 else int(request.POST['count'])
 
-        clean_db()
-        images_url = get_images_url(count_img_download)
+        images_url = await sync_to_async(get_images_url)(count_img_download)
 
         tasks = [asyncio.ensure_future(download_image(url)) for url in images_url]
         image_list = await asyncio.gather(*tasks)

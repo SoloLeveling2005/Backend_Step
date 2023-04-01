@@ -7,7 +7,6 @@
     <list default="true" id="cbadc713-a000-4a82-bfb9-ce375212e98b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../Django-Server" beforeDir="false" afterPath="$PROJECT_DIR$/../../Django-Server" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/web/admin.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/admin.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/web/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/web/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PyE-221-1" beforeDir="false" afterPath="$PROJECT_DIR$/../../PyE-221-1" afterDir="false" />
@@ -113,7 +112,7 @@
       <updated>1680260581209</updated>
       <workItem from="1680260582262" duration="9288000" />
       <workItem from="1680313065148" duration="1124000" />
-      <workItem from="1680316831235" duration="831000" />
+      <workItem from="1680316831235" duration="2283000" />
     </task>
     <servers />
   </component>
