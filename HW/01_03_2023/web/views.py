@@ -10,7 +10,23 @@ import urllib.request
 # Create your views here.
 import requests
 import zipfile
+from .models import Urls
 
+def clean_db():
+    expired_objects = Urls.objects.filter(is_expired=True)
+    expired_objects.delete()
+
+def get_images_url(count_img_download):
+    # смотрим есть ли достаточно ссылок фоток в бд, если есть то отправляем их иначе делаем новый запрос
+    count_in_model = Urls.objects.count()
+    if count_in_model >= count_img_download:
+        random_objects = Urls.objects.order_by('?')[:10]
+        return [row.url for row in random_objects]
+    else:
+        parse_images_url = parse_website('https://fonwall.ru/')[1:int(count_img_download) + 1]
+        [Urls.objects.create(url=i) for i in parse_images_url]
+
+        return
 
 def index(request):
     return HttpResponse(render(request, 'index.html'))
@@ -35,7 +51,10 @@ async def download_image(url):
 async def form_request(request):
     if request.method == "POST":
         count_img_download = 20 if int(request.POST['count']) > 20 else int(request.POST['count'])
-        images_url = parse_website('https://fonwall.ru/')[1:int(count_img_download) + 1]
+
+        clean_db()
+        images_url = get_images_url(count_img_download)
+
         tasks = [asyncio.ensure_future(download_image(url)) for url in images_url]
         image_list = await asyncio.gather(*tasks)
 
@@ -54,6 +73,6 @@ async def form_request(request):
 def get_urls(request, count_):
     if request.method == "GET":
         count_img_download = 20 if int(count_) > 20 else int(count_)
-        images_url = parse_website('https://fonwall.ru/')[1:int(count_img_download) + 1]
+        images_url = get_images_url(count_img_download)
         return JsonResponse({'imgs': images_url})
     return JsonResponse({'error': 'Method not allowed'})
