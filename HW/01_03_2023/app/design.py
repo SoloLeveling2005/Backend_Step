@@ -1,4 +1,4 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow
+from PyQt6.QtWidgets import QApplication, QMainWindow
 from output import Ui_MainWindow
 
 
@@ -12,4 +12,4 @@ if __name__ == '__main__':
     app = QApplication([])
     window = MyMainWindow()
     window.show()
-    app.exec_()
+    app.exec()

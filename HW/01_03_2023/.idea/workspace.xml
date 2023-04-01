@@ -7,6 +7,16 @@
     <list default="true" id="cbadc713-a000-4a82-bfb9-ce375212e98b" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/../../Django-Server" beforeDir="false" afterPath="$PROJECT_DIR$/../../Django-Server" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/design.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/design.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/images/png0.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/images/png1.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/png1.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/images/png2.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/png2.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/images/png3.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/png3.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/images/png5.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/png5.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/images/png6.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/png6.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/images/png7.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/png7.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/images/png8.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/png8.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/images/png9.png" beforeDir="false" afterPath="$PROJECT_DIR$/app/images/png9.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/output.py" beforeDir="false" afterPath="$PROJECT_DIR$/app/output.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/../../PyE-221-1" beforeDir="false" afterPath="$PROJECT_DIR$/../../PyE-221-1" afterDir="false" />
     </list>
@@ -72,6 +82,28 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
+    <configuration name="output (1)" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="01_03_2023" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/app" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/app/output.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
     <configuration name="output" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="01_03_2023" />
       <option name="INTERPRETER_OPTIONS" value="" />
@@ -120,6 +152,7 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.design" />
+        <item itemvalue="Python.output (1)" />
         <item itemvalue="Python.output" />
       </list>
     </recent_temporary>
@@ -135,7 +168,7 @@
       <workItem from="1680260582262" duration="9288000" />
       <workItem from="1680313065148" duration="1124000" />
       <workItem from="1680316831235" duration="2615000" />
-      <workItem from="1680351499411" duration="42000" />
+      <workItem from="1680351499411" duration="1003000" />
     </task>
     <servers />
   </component>
@@ -143,6 +176,8 @@
     <option name="version" value="3" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/01_03_2023$output__1_.coverage" NAME="output (1) Coverage Results" MODIFIED="1680352338568" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
+    <SUITE FILE_PATH="coverage/01_03_2023$design.coverage" NAME="design Coverage Results" MODIFIED="1680352346233" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/app" />
     <SUITE FILE_PATH="coverage/01_03_2023$output.coverage" NAME="output Coverage Results" MODIFIED="1680269754063" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/../27_02_2023" />
   </component>
 </project>
