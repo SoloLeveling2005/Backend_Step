@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}Main{% endblock title %}
+{% block body %}
+    
+    <section class="w-100 h-100">
+        <div class="container mt-2">
+            <form action="{% url 'add_profile' %}" method="POST" class="mb-3">
+                {% csrf_token %}
+    {#            {{ form }}#}
+                <input type="text" name="username" placeholder="username" class="form-control mb-2">
+                <input type="text" name="description" placeholder="description" class="form-control mb-2">
+                <input type="submit" value="Добавить" class="btn btn-primary w-100">
+            </form>
+        <div class="d-flex flex-wrap justify-content-between">
+            {% for user in users %}
+                <div class="card mb-3" style="width: 24%;">
+                  <div class="card-body">
+                    <h5 class="card-title">{{ user.username }}</h5>
+                    <p class="card-text">{{ user.description }}</p>
+                    <h5>Поставите оценку?</h5>
+{#                    {{ user.estimation }}#}
+                      {% if not user.estimation %}
+                    <div class="d-flex  align-items-center">
+                     <form action="{% url 'new_estimation' %}" method="POST" class="me-3" style="">
+                         {% csrf_token %}
+                        <input class="star star-5" id="star-5" type="radio" name="estimation"/>
+                        <label class="star star-5" for="star-5"></label>
+                        <input class="star star-4" id="star-4" type="radio" name="estimation"/>
+                        <label class="star star-4" for="star-4"></label>
+                        <input class="star star-3" id="star-3" type="radio" name="estimation"/>
+                        <label class="star star-3" for="star-3"></label>
+                        <input class="star star-2" id="star-2" type="radio" name="estimation"/>
+                        <label class="star star-2" for="star-2"></label>
+                        <input class="star star-1" id="star-1" type="radio" name="estimation"/>
+                        <label class="star star-1" for="star-1"></label>
+                         <input type="submit" value="Оставить оценку" class="btn btn-primary">
+                      </form>
+                    </div>
+                      {% else %}
+                      Ваша оценка:
+                      {% endif %}
+                  </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        </div>
+
+
+    </section>
+    
+{% endblock body %}
+
