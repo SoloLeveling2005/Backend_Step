@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from app.models import ProfileForm, Profile
+from app.models import ProfileForm, Profile, Reviews
 
 
 # Create your views here.
@@ -22,4 +22,5 @@ def add_profile(request):
 
 def new_estimation(request):
     print(request.POST)
+    Reviews()
     return redirect('main')
