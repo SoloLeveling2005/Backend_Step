@@ -22,5 +22,7 @@ def add_profile(request):
 
 def new_estimation(request):
     print(request.POST)
-    Reviews()
+    estimation = request.POST['estimation']
+    user = Profile.objects.get(id=request.POST['user_id'])
+    Reviews(estimation=estimation, profile=user).save()
     return redirect('main')
