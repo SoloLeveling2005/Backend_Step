@@ -1,0 +1,9 @@
+<header class="w-100 bg-dark">
+    <div class="container py-3 d-flex align-items-center justify-content-between text-white">
+        <h3>{{ user.username }}</h3>
+        <form action="{% url 'logout' %}" method="POST">
+            {% csrf_token %}
+            <input type="submit" value="Logout" class="btn text-white">
+        </form>
+    </div>
+</header>
