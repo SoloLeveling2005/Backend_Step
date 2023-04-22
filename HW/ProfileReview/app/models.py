@@ -10,7 +10,6 @@ class Profile(models.Model):
     """
     username = models.CharField(max_length=100)
     description = models.CharField(max_length=300)
-    token = models.CharField(max_length=200)
 
     def estimation(self):
         return Reviews.objects.get(profile=self)
@@ -22,7 +21,6 @@ class Reviews(models.Model):
     """
     profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
     estimation = models.SmallIntegerField()
-
 
 
 class ProfileForm(ModelForm):
