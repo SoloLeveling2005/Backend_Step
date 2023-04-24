@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}New profile{% endblock title %}
+{% block body %}
+
+    <section class="w-100 h-100 d-flex align-items-center justify-content-center">
+        <form class="d-flex justify-content-center align-items-center w-50 h-100 flex-column" method="POST" action="{% url 'add_profile' %}">
+            {% csrf_token %}
+            <input type="text" class="form-control w-100 mb-3" name="username">
+            <input type="text" class="form-control w-100 mb-3" name="description">
+            <input type="submit" value="Login" class="btn btn-success w-100">
+        </form>
+
+
+
+    </section>
+
+{% endblock body %}
+
