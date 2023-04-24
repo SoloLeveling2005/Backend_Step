@@ -12,7 +12,7 @@ class Profile(models.Model):
     description = models.CharField(max_length=300)
 
     def estimation(self):
-        return Reviews.objects.get(profile=self)
+        return Reviews.objects.filter(profile=self)
 
 
 class Reviews(models.Model):
