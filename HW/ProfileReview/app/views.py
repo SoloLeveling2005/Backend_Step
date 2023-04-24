@@ -14,8 +14,12 @@ def main(request):
     users = Profile.objects.all()
     user_profile = Profile.objects.get(username=username)
     user_estimations = Reviews.objects.filter(profile=user_profile)
-    user_estimations = [x.id for x in user_estimations]
-    return render(request, 'main.html', context={'form': form, 'users': users, 'user_estimations': user_estimations})
+    users_estimations = [user.estimations() for user in users]
+    for i in users_estimations:
+        for x in i.all():
+            print(x.profile.username)
+    return render(request, 'main.html', context={'form': form, 'users': users,
+                                                 'user_estimations': user_estimations, 'username': username})
 
 
 def add_profile(request):
