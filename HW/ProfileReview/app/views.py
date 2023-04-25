@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from app.models import ProfileForm, Profile, Reviews
 from uuid import uuid4
 
+
 # Create your views here.
 
 def main(request):
@@ -11,15 +12,16 @@ def main(request):
         return redirect('add_profile')
 
     form = ProfileForm
-    users = Profile.objects.all()
-    user_profile = Profile.objects.get(username=username)
-    user_estimations = Reviews.objects.filter(profile=user_profile)
-    users_estimations = [user.estimations() for user in users]
-    for i in users_estimations:
-        for x in i.all():
-            print(x.profile.username)
-    return render(request, 'main.html', context={'form': form, 'users': users,
-                                                 'user_estimations': user_estimations, 'username': username})
+    profiles = Profile.objects.all()
+    user = Profile.objects.get(username=username)
+    profiles_reviews = [profile.estimations() for profile in profiles]
+    # Конструкция не очень, потом заменю 😅
+    new_profiles_reviews = []
+    for i in profiles_reviews:
+        for x in i:
+            new_profiles_reviews.append(x)
+
+    return render(request, 'main.html', context={'form': form, 'profiles': new_profiles_reviews, 'user': user})
 
 
 def add_profile(request):
