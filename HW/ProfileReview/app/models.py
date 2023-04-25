@@ -19,7 +19,8 @@ class Reviews(models.Model):
     """
     Модель профиля.
     """
-    profile = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    profile = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='reviews_profile')
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE, related_name='reviews_user')
     estimation = models.SmallIntegerField()
 
 

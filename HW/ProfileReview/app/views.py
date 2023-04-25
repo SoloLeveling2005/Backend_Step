@@ -3,6 +3,7 @@ from django.shortcuts import render, redirect
 from app.models import ProfileForm, Profile, Reviews
 from uuid import uuid4
 
+
 # Create your views here.
 
 def main(request):
@@ -11,15 +12,24 @@ def main(request):
         return redirect('add_profile')
 
     form = ProfileForm
-    users = Profile.objects.all()
-    user_profile = Profile.objects.get(username=username)
-    user_estimations = Reviews.objects.filter(profile=user_profile)
-    users_estimations = [user.estimations() for user in users]
-    for i in users_estimations:
-        for x in i.all():
-            print(x.profile.username)
-    return render(request, 'main.html', context={'form': form, 'users': users,
-                                                 'user_estimations': user_estimations, 'username': username})
+    profiles = Profile.objects.all()
+    user = Profile.objects.get(username=username)
+    profiles_reviews = [profile.estimations() for profile in profiles]
+    # Конструкция не очень, потом заменю 😅
+    # {1:{profile:profile, estimations:[], my_estimation:False}}
+    new_profiles = {}
+    for profile in profiles:
+        id_ = profile.id
+        print(id_)
+        new_profiles[id_] = {'profile': profile, 'estimations': [], 'my_estimation': False}
+        for estimation in profile.estimations():
+            new_profiles[id_]['estimations'].append(estimation)
+            if estimation.user == user:
+                new_profiles[id_]['my_estimation'] = True
+    print(new_profiles)
+    return render(request, 'main.html',
+                  context={'form': form, 'profiles': profiles, 'new_profiles': new_profiles,
+                           'user': user})
 
 
 def add_profile(request):
@@ -44,7 +54,9 @@ def new_estimation(request):
         return redirect('add_profile')
 
     print(request.POST)
-    estimation = request.POST.get('estimation')
+    profile_id = request.POST.get('profile')
+    profile = Profile.objects.get(id=profile_id)
     user = Profile.objects.get(username=username)
-    Reviews(estimation=estimation, profile=user).save()
+    estimation = request.POST.get('estimation')
+    Reviews(estimation=estimation, profile=profile, user=user).save()
     return redirect('main')
