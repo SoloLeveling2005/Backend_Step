@@ -6,7 +6,7 @@ from django.core.paginator import Paginator
 # Create your models here.
 
 class User(models.Model):
-    username = models.CharField(max_length=100)
+    username = models.CharField(max_length=100, unique=True)
     password = models.CharField(max_length=100)
     deleted_at = models.BooleanField(default=False)
 
@@ -33,6 +33,12 @@ class User(models.Model):
         users = cls.objects.all()
         users = Paginator(users, count).page(page)
         return users
+
+
+class Profile(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_profile')
+    gender = models.BooleanField(default=True)
+    age = models.IntegerField(default=18)
 
 
 class Post(models.Model):
