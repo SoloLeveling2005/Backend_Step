@@ -1,6 +1,7 @@
 from django.shortcuts import render
-from rest_framework import status
-from rest_framework.decorators import api_view
+from rest_framework import status, permissions
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from .serializers import VacanciesSerializer
 from .models import Vacancies
@@ -9,6 +10,7 @@ from .models import Vacancies
 # Create your views here.
 
 @api_view(['GET'])
+@permission_classes((permissions.AllowAny,))
 def vacancies(request):
     """Просмотр списка вакансий."""
     all_vacancies = Vacancies.objects.all()
@@ -16,6 +18,7 @@ def vacancies(request):
 
 
 @api_view(['GET'])
+@permission_classes([AllowAny])
 def detail(request, vacancy_id: int):
     """Детальный просмотр вакансии."""
     vacancy = Vacancies.objects.filter(id=vacancy_id)
@@ -25,6 +28,7 @@ def detail(request, vacancy_id: int):
 
 
 @api_view(['POST'])
+@permission_classes([AllowAny])
 def create(request):
     """Создание новой вакансии."""
     title = request.POST['title']

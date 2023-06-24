@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 
 function VacanciesList(props: any) {
@@ -8,11 +9,19 @@ function VacanciesList(props: any) {
 
 
     useEffect(()=>{
+        // Получение CSRF-токена из cookie
+        const csrftoken = Cookies.get('csrftoken');
+
+        // Отправка запроса с CSRF-токеном
+        axios.defaults.headers.common['X-CSRFToken'] = csrftoken;
+        let cookie_data = {csrf_token: Cookies.get('csrftoken')}
         axios.get(`http://127.0.0.1:8000/api/vacancies`, {
-            headers:{
-                "Accept": "application/json",
-                "Access-Control-Allow-Origin": "*",
-            }
+            headers: {
+                'X-CSRFToken': cookie_data.csrf_token,
+                // 'content-type': 'multipart/form-data',
+                'Content-Type': 'application/json',
+
+            },
         }).then(response=> {
             console.log(response)
         }).catch(error=>{
