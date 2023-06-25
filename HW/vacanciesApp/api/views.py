@@ -40,3 +40,7 @@ def create(request):
         return Response(status=status.HTTP_400_BAD_REQUEST)
     vacancy = Vacancies.objects.create(title=title, description=description, rate=rate)
     return Response(data=VacanciesSerializer(vacancy).data, status=status.HTTP_201_CREATED)
+
+
+def template(request):
+    return render(request, 'index.html')
