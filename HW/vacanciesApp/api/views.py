@@ -31,9 +31,10 @@ def detail(request, vacancy_id: int):
 @permission_classes([AllowAny])
 def create(request):
     """Создание новой вакансии."""
-    title = request.POST['title']
-    description = request.POST['description']
-    rate = request.POST['rate']
+
+    title = request.data['title']
+    description = request.data['description']
+    rate = request.data['rate']
 
     if not title or not description or not rate:
         return Response(status=status.HTTP_400_BAD_REQUEST)
